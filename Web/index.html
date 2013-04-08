@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>LexTerm</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div id="header" style="margin:10px;">
+	<div class="btn-toolbar">
+		<div class="btn-group">
+			<button class="btn btn-mini btn-inverse" id="connectbtn">Connect to Database</button>
+		</div>
+	</div>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="js/ajaxclient.js"></script>
+<script>
+var db, cbtn = document.getElementById('connectbtn');
+cbtn.addEventListener('click',function(){
+	db = new LexTermServer("http://"+prompt("url:"));
+},false);
+</script>
+</html>
