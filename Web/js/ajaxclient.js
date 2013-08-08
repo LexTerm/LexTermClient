@@ -135,13 +135,13 @@ var LexTermServer = (function($){
 	proto = LexTermLang.prototype;
 	
 	proto.listLexemes = function(){
-		return make_request("GET",this.base+"/lex/"+this.lang+"/");
+		return make_request("GET",this.base+"/lex/"+this.lang+"/lexemes/");
 	};
 	proto.getLexeme = function(id){
 		return make_request("GET",this.base+"/lex/"+this.lang+"/lexemes/"+id+"/");
 	};
 	proto.getLexemeByLemma = function(lemma){
-		return make_request("GET",this.base+"/lex/"+this.lang+"/lemma/"+lemma+"/");
+		return make_request("GET",this.base+"/lex/"+this.lang+"/lemmas/"+lemma+"/");
 	};
 	
 	proto.createLexeme = function(body){
@@ -160,22 +160,22 @@ var LexTermServer = (function($){
 	
 	proto.listConcepts = function(langs){
 		var query = (langs && langs.length)?"?lang="+langs.join(','):"";
-		return make_request("GET",this.base+"/term/"+this.subj+"/concepts/"+query);
+		return make_request("GET",this.base+"/term/subjects/"+this.subj+"/concepts/"+query);
 	};
 	proto.getConcept = function(id,langs){
 		var query = (langs && langs.length)?"/?lang="+langs.join(','):"/";
-		return make_request("GET",this.base+"/term/"+this.subj+"/concepts/"+id+query);
+		return make_request("GET",this.base+"/term/subjects/"+this.subj+"/concepts/"+id+query);
 	};
 	proto.getConceptByTerm = function(lemma,langs){
 		var query = (langs && langs.length)?"/?lang="+langs.join(','):"/";
-		return make_request("GET",this.base+"/term/"+this.subj+"/lemma/"+lemma+query);
+		return make_request("GET",this.base+"/term/subjects/"+this.subj+"/lemmas/"+lemma+query);
 	};
 	
 	proto.createConcept = function(body){
-		return make_request("POST",this.base+"/term/"+this.subj+"/concepts/",body);
+		return make_request("POST",this.base+"/term/subjects/"+this.subj+"/concepts/",body);
 	};
 	proto.editConcept = function(id,body){
-		return make_request("POST",this.base+"/term/"+this.subj+"/concepts/"+id+"/",body);
+		return make_request("POST",this.base+"/term/subjects/"+this.subj+"/concepts/"+id+"/",body);
 	};
 	
 	function LexTermServer(base){
@@ -186,7 +186,7 @@ var LexTermServer = (function($){
 		make_request("GET",this.base+"/lex/").then(function(langs){
 			langs.forEach(function(lcode){ lmap[lcode] = new LexTermLang(base, lcode); });
 		});
-		make_request("GET",this.base+"/term/").then(function(subjs){
+		make_request("GET",this.base+"/term/subjects/").then(function(subjs){
 			subjs.forEach(function(sname){ smap[sname] = new LexTermSubj(base, sname); });
 		});
 	}
@@ -207,11 +207,24 @@ var LexTermServer = (function($){
 		return def.promise();
 	};
 
+	proto.listConcepts = function(langs){
+		var query = (langs && langs.length)?"?lang="+langs.join(','):"";
+		return make_request("GET",this.base+"/term/concepts/"+query);
+	};
+	proto.getConcept = function(id,langs){
+		var query = (langs && langs.length)?"/?lang="+langs.join(','):"/";
+		return make_request("GET",this.base+"/term/concepts/"+id+query);
+	};
+	proto.getConceptByTerm = function(lemma,langs){
+		var query = (langs && langs.length)?"/?lang="+langs.join(','):"/";
+		return make_request("GET",this.base+"/term/lemmas/"+lemma+query);
+	};
+	
 	proto.createConcept = function(body){
-		return make_request("POST",this.base+"/concepts/",body);
+		return make_request("POST",this.base+"/term/concepts/",body);
 	};
 	proto.editConcept = function(id,body){
-		return make_request("POST",this.base+"/concepts/"+id+"/",body);
+		return make_request("POST",this.base+"/term/concepts/"+id+"/",body);
 	};
 
 	return LexTermServer;

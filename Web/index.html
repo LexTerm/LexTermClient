@@ -11,13 +11,51 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+  <div class="col-lg-2" id="toc"></div>
+  <div class="col-lg-10" id="body"></div>
+</div>
 </body>
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="ractive" id="toctemp">
+	<select value="{{toc_lang}}">
+		{{#languages}}<option>{{.}}</option>{{/languages}}
+	</select>
+	<select value="{{toc_rep}}">
+		{{#lang_reps}}<option>{{.}}</option>{{/lang_reps}}
+	</select>
+	{{#toc_rep}}
+	{{#lexemes:i}}
+	<a proxy-tap="select:{{i}}">{{.forms[.lemma].representations[toc_rep]}}</a>
+	{{/lexemes}}
+	{{/toc_rep}}
+</script>
+<script src="js/jquery-2.0.3.min.js"></script>
 <script src="js/ajaxclient.js"></script>
+<script src="js/Ractive.js"></script>
 <script>
-var db, cbtn = document.getElementById('connectbtn');
-cbtn.addEventListener('click',function(){
-	db = new LexTermServer("http://127.0.0.1/api");
+var db, tocRactive;
+
+tocRactive = new Ractive({
+	el: '#toc',
+	template: '#toctemp'
+});
+	
+tocRactive.observe('toc_lang',function(newValue){
+	db.Language(newValue).listLexemes().then(function(lexemes){
+		tocRactive.set("lexemes",lexemes);
+	});
+	db.Language(newValue).representations.list().then(function(reps){
+		tocRactive.set("lang_reps",reps);
+	});
+});
+
+document.getElementById('connectbtn').addEventListener('click',function(){
+	var url = prompt("Enter Server URL:","http://lexterm.gevterm.net/api");
+	if(!url){ return; }
+	db = new LexTermServer(url);
+	db.listLanguages().then(function(langs){
+		tocRactive.set('languages',langs);
+	});
 },false);
 </script>
 </html>
