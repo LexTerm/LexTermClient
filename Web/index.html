@@ -29,23 +29,66 @@
 	{{/lexemes}}
 	{{/toc_rep}}
 </script>
+<script type="ractive" id="bodytemp">
+	<h3>{{#lemma}}{{.name}}:{{.value}}<br/>{{/lemma}}</h3>
+	<ul>
+		{{#forms}}
+		<li><b>{{.name}}:</b> {{#.value}}{{.name}}:{{.value}}<br/>{{/.value}}</li>
+		{{/forms}}
+	</ul>
+	<b>POS:</b>{{pos}}<br/>
+	{{#senses}}
+	<span>{{#.subjectFields}}{{.}}{{/.subjectFields}}</span><br/>
+	{{#.definitions}}{{.lang}}:{{.text}}{{/.definitions}}
+	{{/senses}}
+</script>
 <script src="js/jquery-2.0.3.min.js"></script>
 <script src="js/ajaxclient.js"></script>
 <script src="js/Ractive.js"></script>
 <script>
-var db, tocRactive;
+var db, tocRactive, bodyRactive;
+
+bodyRactive = new Ractive({
+	el: '#body',
+	template: '#bodytemp'
+});
 
 tocRactive = new Ractive({
 	el: '#toc',
 	template: '#toctemp'
 });
-	
+
 tocRactive.observe('toc_lang',function(newValue){
 	db.Language(newValue).listLexemes().then(function(lexemes){
 		tocRactive.set("lexemes",lexemes);
 	});
 	db.Language(newValue).representations.list().then(function(reps){
 		tocRactive.set("lang_reps",reps);
+	});
+});
+
+tocRactive.on('select',function(event,index){
+	var lexeme = tocRactive.data.lexemes[index],
+		lemma_reps = lexeme.forms[lexeme.lemma].representations,
+		lexeme_forms = Object.keys(lexeme.forms).map(function(key){
+			var reps = lexeme.forms[key].representations;
+			return {
+				name: key,
+				value: Object.keys(reps).map(function(key){ return {name: key, value: reps[key]}; })
+			};
+		});
+	bodyRactive.set({
+		lemma: Object.keys(lemma_reps).map(function(key){ return {name: key, value: lemma_reps[key]}; }),
+		forms: lexeme_forms,
+		pos: lexeme.pos,
+		senses: lexeme.senses.map(function(sense){
+			return {
+				subjectFields: sense.subjectFields,
+				definitions: Object.keys(sense.definitions).map(function(key){
+					return {lang: key, text: sense.definitions[key]};
+				})
+			};
+		})
 	});
 });
 
