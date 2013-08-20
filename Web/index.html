@@ -96,7 +96,9 @@ document.getElementById('connectbtn').addEventListener('click',function(){
 	var url = prompt("Enter Server URL:","http://lexterm.gevterm.net/api");
 	if(!url){ return; }
 	db = new LexTermServer(url);
-	db.listLanguages().then(function(langs){
+	db.load().then(function(){
+		return db.listLanguages();
+	}).then(function(langs){
 		tocRactive.set('languages',langs);
 	});
 },false);
