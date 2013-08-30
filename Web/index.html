@@ -19,13 +19,14 @@
 </div>
 </body>
 <script type="ractive" id="toctemp">
-	<button proxy-tap="add">Add New Entry</button><br/>
+	<button proxy-tap="addentry">Add New Entry</button><br/>
 	<label>Language:<select value="{{toc_lang}}">
 		{{#languages}}<option>{{.}}</option>{{/languages}}
 	</select></label>
 	<label>Representation:<select value="{{toc_rep}}">
 		{{#lang_reps}}<option>{{.}}</option>{{/lang_reps}}
 	</select></label><br/>
+	<button proxy-tap="addclass:{{toc_lang}}">Add Lexical Class</button><br/>
 	{{#toc_rep}}
 	{{#lexemes:i}}
 	<a proxy-tap="select:{{i}}">{{.forms[.lemma].representations[toc_rep]}}</a>
@@ -154,7 +155,7 @@ tocRactive.on('select',function(event,index){
 	});
 });
 
-tocRactive.on('add',function(){
+tocRactive.on('addentry',function(){
 	"use strict";
 	termRactive.set('active', false);
 	db.Language(tocRactive.get('toc_lang')).classes.get(lexRactive.get('classnames')[0]).then(function(lexicalClass){

@@ -11,8 +11,8 @@ var LexTermServer = (function($){
 			dataType: "json"
 		}).then(function(response){
 			if(false){ def.reject(problem); }
-			else{ def.resolve(Object.freeze(response)); }
-		});
+			else{ def.resolve(/*Object.freeze(*/response/*)*/); }
+		},function(xhr,err){ console.log(err); });
 		return def.promise();
 	}
 	
@@ -81,10 +81,10 @@ var LexTermServer = (function($){
 		this.base = base;
 		this.langCode = langCode;
 		this.cmap = cmap;
-		make_request("GET",base+"/lex/"+langCode+"/classes").then(function(classes){
-			classes.forEach(function(name){
-				make_request("GET",base+"/lex/"+langCode+"/classes/"+name+"/")
-					.then(function(classobj){ cmap[name] = classobj; });
+		make_request("GET",base+"/lex/"+langCode+"/classes/").then(function(classes){
+			classes.forEach(function(classdesc){
+				make_request("GET",base+"/lex/"+langCode+"/classes/"+classdesc.name+"/")
+					.then(function(classobj){ cmap[classdesc.name] = classobj; });
 			});
 		});
 	}
