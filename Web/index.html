@@ -12,45 +12,107 @@
 	</div>
 </div>
 <div class="row">
+  <div class="col-lg-1"></div>
   <div class="col-lg-2" id="toc"></div>
-  <div class="col-lg-10" id="body"></div>
+  <div class="col-lg-1"></div>
+  <div class="col-lg-6" id="body"></div>
 </div>
 </body>
 <script type="ractive" id="toctemp">
-	<select value="{{toc_lang}}">
+	<button proxy-tap="add">Add New Entry</button><br/>
+	<label>Language:<select value="{{toc_lang}}">
 		{{#languages}}<option>{{.}}</option>{{/languages}}
-	</select>
-	<select value="{{toc_rep}}">
+	</select></label>
+	<label>Representation:<select value="{{toc_rep}}">
 		{{#lang_reps}}<option>{{.}}</option>{{/lang_reps}}
-	</select>
+	</select></label><br/>
 	{{#toc_rep}}
 	{{#lexemes:i}}
 	<a proxy-tap="select:{{i}}">{{.forms[.lemma].representations[toc_rep]}}</a>
 	{{/lexemes}}
 	{{/toc_rep}}
 </script>
-<script type="ractive" id="bodytemp">
-	<h3>{{#lemma}}{{.name}}:{{.value}}<br/>{{/lemma}}</h3>
+<script type="ractive" id="lextemp">
+	{{#active}}
+	<b>POS:</b><select value="{{lexeme.pos}}">
+		{{#classnames}}<option value="{{.}}">{{.}}</option>{{/classnames}}
+	</select><br/>
+	<button on-tap="addrep">Add Lexical Class</button>
+	{{#representations}}
+	<i>{{.}}:</i><input type="text" value="{{lexeme.forms[lexeme.lemma].representations[.]}}"/><br/>
+	{{/representations}}
+	<button on-tap="addrep">Add Representation</button>
 	<ul>
-		{{#forms}}
-		<li><b>{{.name}}:</b> {{#.value}}{{.name}}:{{.value}}<br/>{{/.value}}</li>
-		{{/forms}}
+		{{#lexicalClass.forms:name}}
+		<li><b>{{name}}:</b>
+			<ul>{{#representations}}
+			<li><i>{{.}}:</i><input type="text" value="{{lexeme.forms[name].representations[.]}}"/></li>
+			{{/representations}}</ul>
+		</li>
+		{{/lexicalClass.forms}}
 	</ul>
-	<b>POS:</b>{{pos}}<br/>
-	{{#senses}}
-	<span>{{#.subjectFields}}{{.}}{{/.subjectFields}}</span><br/>
-	{{#.definitions}}{{.lang}}:{{.text}}{{/.definitions}}
-	{{/senses}}
+	<button on-tap="addform">Add Form</button>
+	<ol>{{#lexeme.senses}}
+		<li>
+			<span style="font-variant:small-caps;">{{#.subjectFields}}{{.}} {{/.subjectFields}}</span><br/>
+			<button on-tap="concept:{{.conceptId}}">Go To Termbase</button><br/>
+			<ul>{{#.definitions:code}}
+				<li><i>{{code}}:</i><textarea>{{.}}</textarea></li>
+			{{/.definitions}}</ul>
+		</li>
+	{{/lexeme.senses}}</ol>
+	<button on-tap="adddef">Add Definition</button><br/>
+	<button on-tap="save">Save Changes</button>
+	{{/active}}
+</script>
+<script type="ractive" id="termtemp">
+	{{#active}}
+	<b>Fields:</b><span style="font-variant:small-caps;">{{#concept.subjectFields}}{{.}} {{/concept.subjectFields}}</span><br/>
+	<ul>{{#concept.languages:code}}
+		<li>
+			<i>{{code}}:</i><button on-tap="lexeme:{{code}},{{.lexId}}">Go To Dictionary</button>
+			<ul>{{#.forms:fname}}
+				<li><b>{{fname}}:</b>
+					<ul>{{#.representations:rname}}
+						<li><i>{{rname}}:</i>{{.}}</li>
+					{{/.representations}}</ul>
+				</li>
+			{{/.forms}}</ul>
+			{{.definition}}
+	{{/concept.languages}}</ul>
+	{{/active}}
 </script>
 <script src="js/jquery-2.0.3.min.js"></script>
 <script src="js/ajaxclient.js"></script>
 <script src="js/Ractive.js"></script>
 <script>
-var db, tocRactive, bodyRactive;
+var db, tocRactive, lexRactive, termRactive;
 
-bodyRactive = new Ractive({
+lexRactive = new Ractive({
 	el: '#body',
-	template: '#bodytemp'
+	append: true,
+	template: '#lextemp',
+	data: {
+		active: false
+	}
+});
+
+lexRactive.observe('lexeme.pos',function(newValue){
+	"use strict";
+	db.Language(tocRactive.get('toc_lang')).classes.get(newValue).then(function(lexicalClass){
+		lexRactive.set({
+			lexicalClass: lexicalClass
+		});
+	});
+});
+
+termRactive = new Ractive({
+	el: '#body',
+	append: true,
+	template: '#termtemp',
+	data: {
+		active: false
+	}
 });
 
 tocRactive = new Ractive({
@@ -59,47 +121,65 @@ tocRactive = new Ractive({
 });
 
 tocRactive.observe('toc_lang',function(newValue){
-	db.Language(newValue).listLexemes().then(function(lexemes){
-		tocRactive.set("lexemes",lexemes);
-	});
-	db.Language(newValue).representations.list().then(function(reps){
-		tocRactive.set("lang_reps",reps);
+	"use strict";
+	var newLang = db.Language(newValue);
+	$.when(
+		newLang.listLexemes(),
+		newLang.representations.list(),
+		newLang.classes.list()
+	).then(function(lexemes, reps, classes){
+		tocRactive.set({
+			lang_reps: reps,
+			lexemes: lexemes
+		});
+		lexRactive.set({
+			active: false,
+			representations: reps,
+			classnames: classes
+		});
 	});
 });
 
 tocRactive.on('select',function(event,index){
-	var lexeme = tocRactive.data.lexemes[index],
-		lemma_reps = lexeme.forms[lexeme.lemma].representations,
-		lexeme_forms = Object.keys(lexeme.forms).map(function(key){
-			var reps = lexeme.forms[key].representations;
-			return {
-				name: key,
-				value: Object.keys(reps).map(function(key){ return {name: key, value: reps[key]}; })
-			};
+	"use strict";
+	var lexeme = tocRactive.data.lexemes[index];
+	db.Language(tocRactive.get('toc_lang')).classes.get(lexeme.pos).then(function(lexicalClass){
+		termRactive.set('active', false);
+		lexRactive.set({
+			active: true,
+			index: index,
+			lexeme: lexeme,
+			lexicalClass: lexicalClass
 		});
-	bodyRactive.set({
-		lemma: Object.keys(lemma_reps).map(function(key){ return {name: key, value: lemma_reps[key]}; }),
-		forms: lexeme_forms,
-		pos: lexeme.pos,
-		senses: lexeme.senses.map(function(sense){
-			return {
-				subjectFields: sense.subjectFields,
-				definitions: Object.keys(sense.definitions).map(function(key){
-					return {lang: key, text: sense.definitions[key]};
-				})
-			};
-		})
+	});
+});
+
+tocRactive.on('add',function(){
+	"use strict";
+	termRactive.set('active', false);
+	db.Language(tocRactive.get('toc_lang')).classes.get(lexRactive.get('classnames')[0]).then(function(lexicalClass){
+		lexRactive.set({
+			active: true,
+			index: -1,
+			lexeme: {},
+			lexicalClass: lexicalClass
+		});
 	});
 });
 
 document.getElementById('connectbtn').addEventListener('click',function(){
+	"use strict";
 	var url = prompt("Enter Server URL:","http://lexterm.gevterm.net/api");
 	if(!url){ return; }
 	db = new LexTermServer(url);
 	db.load().then(function(){
-		return db.listLanguages();
-	}).then(function(langs){
-		tocRactive.set('languages',langs);
+		return $.when(db.listLanguages(), db.listSubjects());
+	}).then(function(langs, subjects){
+		tocRactive.set({
+			languages: langs,
+			toc_lang: langs[0],
+			subjects: subjects
+		});
 	});
 },false);
 </script>
