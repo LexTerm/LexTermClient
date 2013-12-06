@@ -6,7 +6,7 @@
 			initialize: function() {
 				this.template = Handlebars.compile(this.model.listTemplate);
 				this.createTemplate = Handlebars.compile(this.model.createTemplate);
-			}
+			},
 			render: function() {
 				this.$el.html(this.template(this.model.toJSON()));
 				return this;
