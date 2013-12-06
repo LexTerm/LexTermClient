@@ -44,6 +44,7 @@
 				this.lex_root = new models.LexRoot(linkifySelf(this
 						.get('_links').lex));
 				this.lex_root.fetch();
+				this.lex_root.server = this;
 
 				this.term_root = new models.TermRoot(linkifySelf(this
 						.get('_links').term));
@@ -60,6 +61,7 @@
 					url : this.get('_links').languages
 				});
 				this.languages.fetch();
+				this.languages.server = this.server;
 			});
 		}
 	});
@@ -100,6 +102,7 @@
 					url : this.get('_links').lexemes
 				});
 				this.lexemes.fetch();
+				this.collection.server.trigger('server:ready');
 				
 //				this.classes = new models.BaseCollection([], {
 //					model : models.LexicalClass,

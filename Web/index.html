@@ -7,7 +7,6 @@
 	<script src="js/lib/underscore.js"></script>
 	<script src="js/lib/backbone.js"></script>
 	<script type="text/javascript" src="js/lib/backbone.localstorage.js"></script>
-	<script src="js/models.js"></script>
 </head>
 <body>
 <div id="header" style="margin:10px;">
@@ -16,11 +15,24 @@
 		</div>
 	</div>
 </div>
-<div class="row">
-
+<div class="container">
+	<div class="row">
+		<div id="sandbox"></div>
+	</div>
 </div>
-<script src="js/main.js"></script>
 </body>
 
+<script id="template-language" type="text/x-handlebars-template">
+	<input id="name" type="text" value="{{name}}" />
+	<input id="langCode" type="text" value="{{langCode}}" maxlength="3" />
+	<ul>
+	{{#each model.lexemes.models}}
+		<li><a href="{{this.attributes._links.self}}">{{this.attributes.lemma}}</a></li>
+	{{/each}}
+	</ul>
+</script>
 
+<script src="js/models.js"></script>
+<script src="js/views.js"></script>
+<script src="js/main.js"></script>
 </html>
