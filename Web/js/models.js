@@ -44,7 +44,6 @@
 				this.lex_root = new models.LexRoot(linkifySelf(this
 						.get('_links').lex));
 				this.lex_root.fetch();
-				this.lex_root.server = this;
 
 				this.term_root = new models.TermRoot(linkifySelf(this
 						.get('_links').term));
@@ -61,7 +60,6 @@
 					url : this.get('_links').languages
 				});
 				this.languages.fetch();
-				this.languages.server = this.server;
 			});
 		}
 	});
@@ -102,7 +100,6 @@
 					url : this.get('_links').lexemes
 				});
 				this.lexemes.fetch();
-				this.collection.server.trigger('server:ready');
 				
 //				this.classes = new models.BaseCollection([], {
 //					model : models.LexicalClass,
@@ -128,10 +125,11 @@
 	models.Lexeme = models.Base.extend({
 		idAttribute: "lexId",
 		initialize : function(attrs, opts) {
+			this.on('add', function() {this.trigger('sync')});
 			this.on('sync', function() {
-				this.lexical_class = new models.LexcalClass(linkifySelf(this
-						.get('_links')['class']));
-				this.lexical_class.fetch();
+//				this.lexical_class = new models.LexicalClass(linkifySelf(this
+//						.get('_links')['class']));
+//				this.lexical_class.fetch();
 
 				this.forms = new models.BaseCollection([], {
 					model : models.LexicalForm,
@@ -139,11 +137,11 @@
 				});
 				this.forms.fetch();
 
-				this.senses = new models.BaseCollection([], {
-					model : models.Concept,
-					url : this.get('_links').senses
-				});
-				this.senses.fetch();
+//				this.senses = new models.BaseCollection([], {
+//					model : models.Concept,
+//					url : this.get('_links').senses
+//				});
+//				this.senses.fetch();
 			});
 
 		}
@@ -151,6 +149,7 @@
 
 	models.LexicalClass = models.Base.extend({
 		initialize : function(attrs, opts) {
+			this.on('add', function() {this.trigger('sync')});
 			this.on('sync', function() {
 				this.forms = new models.BaseCollection([], {
 					model : models.LexicalForm,
@@ -167,6 +166,7 @@
 
 	models.Enumeration = models.Base.extend({
 		initialize : function(attrs, opts) {
+			this.on('add', function() {this.trigger('sync')});
 			this.on('sync', function() {
 				this.values = new models.BaseCollection([], {
 					model : models.EnumerationValue,
@@ -194,12 +194,13 @@
 		idAttribute: "conceptId",
 		
 		initialize : function(attrs, opts) {
+			this.on('add', function() {this.trigger('sync')});
 			this.on('sync', function() {
-				this.terms = new models.BaseCollection([], {
-					model : models.Lexeme,
-					url : this.get('_links').terms
-				});
-				this.terms.fetch();
+				//this.terms = new models.BaseCollection([], {
+				//	model : models.Lexeme,
+				//	url : this.get('_links').terms
+				//});
+				//this.terms.fetch();
 			});
 		}
 	});

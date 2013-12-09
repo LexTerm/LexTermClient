@@ -2,7 +2,9 @@
 <head>
 	<title>LexTerm</title>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/app.css" rel="stylesheet" />
 	<script src="js/lib/jquery-2.0.3.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/lib/handlebars-v1.1.2.js"></script>
 	<script src="js/lib/underscore.js"></script>
 	<script src="js/lib/backbone.js"></script>
@@ -12,25 +14,44 @@
 <div id="header" style="margin:10px;">
 	<div class="btn-toolbar">
 		<div class="btn-group">
+			<input id="server-input" name="server" type="url" placeholder=" New Server (e.g. http://localhost:8000/api/)" size="50"/>
 		</div>
 	</div>
 </div>
 <div class="container">
 	<div class="row">
-		<div id="sandbox"></div>
+		<h3 id="page-title">Welcome to the LexTerm Client.</h3>
+		<div id="display" class="span6 pull-right"></div>
+		<div id="list" class="span4"></div>
 	</div>
 </div>
+
 </body>
 
 <script id="template-language" type="text/x-handlebars-template">
-	<input id="name" type="text" value="{{name}}" />
-	<input id="langCode" type="text" value="{{langCode}}" maxlength="3" />
-	<ul>
-	{{#each model.lexemes.models}}
-		<li><a href="{{this.attributes._links.self}}">{{this.attributes.lemma}}</a></li>
-	{{/each}}
-	</ul>
+    <table class="language">
+	<tr><th>Name:</th><td><input id="name" name="name" type="text" value="{{name}}" /></td></tr>
+	<tr><th>Code:</th><td><input id="langCode" name="langCode" type="text" value="{{code}}" maxlength="3" /></td></tr>
+	<tr><th>Lexemes:</th>
+	    <td>
+    	   <ul>
+    	   {{#each lexemes}}
+    		  {{>lexeme}}
+    	   {{/each}}
+    	   </ul>
+	    </td>
+    </tr>
+	</table>
 </script>
+
+<script id="partial-lexeme" type="text/x-handlebars-template">
+	<li><a id="lexeme-{{id}}" data-id="{{id}}" class="item" href="#lang/{{lang}}/lexeme/{{lemma}}">{{lemma}}</a></li>
+</script>
+
+<script id="partial-language" type="text/x-handlebars-template">
+	<li><a id="lang-{{code}}" data-id="{{code}}" class="item not-implemented" href="#lang/{{code}}">{{name}}</a></li>
+</script>
+
 
 <script src="js/models.js"></script>
 <script src="js/views.js"></script>
