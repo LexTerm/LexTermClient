@@ -1,0 +1,86 @@
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">LexTermManager Client</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+        </div>
+    </nav>
+    <div class="container" id="main">
+        <div class="row">
+            <div>
+                <div class="col-md-3">
+                    <div class="well sidebar-nav">
+                        <strong>Models</strong>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                            {{#link-to 'languages'}}
+                                Languages
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'lexicalclasses'}}
+                                LexicalClasses
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'lexemes'}}
+                                Lexemes
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'subjectfields'}}
+                                SubjectFields
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'concepts'}}
+                                Concepts
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'forms'}}
+                                Forms
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'featurevalues'}}
+                                FeatureValues
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'features'}}
+                                Features
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'representations'}}
+                                Representations
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'representationtypes'}}
+                                RepresentationTypes
+                            {{/link-to}}
+                            </li>
+                            <li class="list-group-item">
+                            {{#link-to 'notes'}}
+                                Notes
+                            {{/link-to}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    {{outlet}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
