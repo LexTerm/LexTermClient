@@ -1,7 +1,8 @@
 /*global Ember*/
 Ltm.Representation = DS.Model.extend({
     name: DS.attr('string'),
-    representationType: DS.belongsTo('representationtype')
+    representationType: DS.belongsTo('representationtype'),
+    lexicalForm: DS.belongsTo('lexicalform')
 });
 
 // probably should be mixed-in...

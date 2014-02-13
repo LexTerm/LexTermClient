@@ -53,6 +53,13 @@ Ltm.Router.map(function () {
         this.route('create');
       });
 
+      this.resource('lexicalforms', function(){
+        this.resource('lexicalform', { path: '/:lexicalform_id' }, function(){
+          this.route('edit');
+        });
+        this.route('create');
+      });
+
       this.resource('lexicalclasses', function(){
         this.resource('lexicalclass', { path: '/:lexicalclass_id' }, function(){
           this.route('edit');

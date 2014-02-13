@@ -4,7 +4,8 @@ Ltm.Lexeme = DS.Model.extend({
     lexClass: DS.belongsTo('lexicalclass'),
     concept: DS.belongsTo('concept'),
     notes: DS.hasMany('note'),
-    forms: DS.hasMany('form')
+    forms: DS.hasMany('form'),
+    lexicalForms: DS.hasMany('lexicalform')
 });
 
 // probably should be mixed-in...
@@ -16,22 +17,3 @@ Ltm.Lexeme.reopen({
     });
   }.property()
 });
-
-// delete below here if you do not want fixtures
-Ltm.Lexeme.FIXTURES = [
-
-  {
-    id: 0,
-
-    lex_id: 'foo'
-
-  },
-
-  {
-    id: 1,
-
-    lex_id: 'foo'
-
-  }
-
-];

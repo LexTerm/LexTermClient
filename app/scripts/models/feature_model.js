@@ -1,7 +1,7 @@
 /*global Ember*/
 Ltm.Feature = DS.Model.extend({
     name: DS.attr('string'),
-    values: DS.hasMany('featurevalue')
+    featurevalues: DS.hasMany('featurevalue')
 });
 
 // probably should be mixed-in...
