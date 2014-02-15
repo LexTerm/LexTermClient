@@ -1,7 +1,7 @@
 /*global Ember*/
 Ltm.Lexeme = DS.Model.extend({
     lexId: DS.attr('string'),
-    lexClass: DS.belongsTo('lexicalclass'),
+    lexicalClass: DS.belongsTo('lexicalclass'),
     concept: DS.belongsTo('concept'),
     notes: DS.hasMany('note'),
     forms: DS.hasMany('form'),

@@ -5,16 +5,25 @@
         <title>LexTermManager Client</title>
 
         <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="bower_components/ember-widgets/dist/ember-widgets.css">
+        <link rel="stylesheet" href="bower_components/ember-table/dist/ember-table.css">
         <link rel="stylesheet" href="styles/style.css">
         <!-- endbuild -->
 </head>
     <body>
         <!-- build:js(app) scripts/components.js -->
         <script src="bower_components/jquery/jquery.js"></script>
-        <script src="bower_components/handlebars/handlebars.runtime.js"></script>
+        <script src="bower_components/handlebars/handlebars.min.js"></script>
         <script src="@@ember"></script>
         <script src="@@ember_data"></script>
         <script src="bower_components/ember-data-django-rest-adapter/dist/ember-data-django-rest-adapter.prod.js"></script>
+        <script src="bower_components/ember-table/dependencies/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+        <script src="bower_components/ember-table/dependencies/antiscroll/antiscroll.js"></script>
+        <script src="bower_components/ember-table/dependencies/jquery.mousewheel.js"></script>
+        <script src="bower_components/ember-list-view/list-view.min.js"></script>
+        <script src="bower_components/ember-widgets/dist/ember-widgets.js"></script>
+        <script src="bower_components/ember-table/dist/ember-table.js"></script>
+
         <!-- endbuild -->
 
         <!-- build:js(.tmp) scripts/templates.js -->
@@ -39,5 +48,5 @@
         <script src="bower_components/bootstrap-sass/js/collapse.js"></script>
         <script src="bower_components/bootstrap-sass/js/tab.js"></script>
         <!-- endbuild -->
-</body>
+    </body>
 </html>
