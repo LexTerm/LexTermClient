@@ -2,7 +2,7 @@
 Ltm.Lexicalclass = DS.Model.extend({
     name: DS.attr('string'),
     language: DS.belongsTo('language'),
-    lexemes: DS.hasMany('lexeme')
+    lexemes: DS.hasMany('lexeme', {async: true})
 });
 
 // probably should be mixed-in...

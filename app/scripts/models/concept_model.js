@@ -2,8 +2,8 @@
 Ltm.Concept = DS.Model.extend({
     conceptId: DS.attr('string'),
     definition: DS.attr('string'),
-    subjectFields: DS.hasMany('subjectfield'),
-    lexemes: DS.hasMany('lexeme')
+    subjectFields: DS.hasMany('subjectfield', {async: true}),
+    lexemes: DS.hasMany('lexeme', {async: true})
 });
 
 // probably should be mixed-in...

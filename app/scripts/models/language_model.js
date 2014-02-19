@@ -3,7 +3,7 @@ Ltm.Language = DS.Model.extend({
     langCode: DS.attr('string'),
     regionCode: DS.attr('string'),
     name: DS.attr('string'),
-    lexicalClasses: DS.hasMany('lexicalclass'),
+    lexicalClasses: DS.hasMany('lexicalclass', {async: true}),
 
     locale: function() {
         return this.get('langCode') + "_" + this.get('regionCode');

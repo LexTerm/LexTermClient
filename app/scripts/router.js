@@ -1,8 +1,10 @@
 Ltm.Router.map(function () {
 
-  this.resource('term', {path: '/:collection_id/term'}, function() {
+  this.resource('term', {path: '/:collection_id/term'}, function() {});
 
-  });
+  this.resource('entry', {path: '/entries/:id'}, function() {});
+
+  this.resource('lex', {path: '/:collection_id/lex'}, function() {});
 
   // API routes useful as reference or for the programatically inclined
   this.resource('api', function() {

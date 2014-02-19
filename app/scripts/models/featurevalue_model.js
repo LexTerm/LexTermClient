@@ -2,7 +2,7 @@
 Ltm.Featurevalue = DS.Model.extend({
     name: DS.attr('string'),
     feature: DS.belongsTo('feature'),
-    forms: DS.hasMany('form')
+    forms: DS.hasMany('form', {async: true})
 });
 
 // probably should be mixed-in...

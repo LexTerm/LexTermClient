@@ -1,9 +1,9 @@
 /*global Ember*/
 Ltm.Form = DS.Model.extend({
     name: DS.attr('string'),
-    lexemes: DS.hasMany('lexeme'),
-    lexicalForms: DS.hasMany('lexicalform'),
-    features: DS.hasMany('featurevalue')
+    lexemes: DS.hasMany('lexeme', {async: true}),
+    lexicalForms: DS.hasMany('lexicalform', {async: true}),
+    features: DS.hasMany('featurevalue', {async: true})
 });
 
 // probably should be mixed-in...

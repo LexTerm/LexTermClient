@@ -1,7 +1,7 @@
 /*global Ember*/
 Ltm.Subjectfield = DS.Model.extend({
     name: DS.attr('string'),
-    concepts: DS.hasMany('concept')
+    concepts: DS.hasMany('concept', {async: true})
 });
 
 // probably should be mixed-in...

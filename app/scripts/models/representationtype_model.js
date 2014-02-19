@@ -1,7 +1,7 @@
 /*global Ember*/
 Ltm.Representationtype = DS.Model.extend({
     name: DS.attr('string'),
-    representations: DS.hasMany('representation')
+    representations: DS.hasMany('representation', {async: true})
 });
 
 // probably should be mixed-in...
