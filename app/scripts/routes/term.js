@@ -1,7 +1,5 @@
 Ltm.TermRoute = Ember.Route.extend({
     model: function(params) {
-        // TODO implement pagination
-        // TODO optimize
         var self = this;
         return self.get('store').find('collection', params.collection_id).then(
             function(collection) {
@@ -23,46 +21,37 @@ Ltm.TermRoute = Ember.Route.extend({
                       'representation', {'lexical_form__lexeme__collections': collection.get('id')})
                 });
             },
-            function() {
-                return Ember.RSVP.hash({
-                  concepts: self.get('store').find('concept'),
-                  languages: self.get('store').find('language'),
-                  lexicalClasses: self.get('store').find('lexicalclass'),
-                  lexemes: self.get('store').find('lexeme'),
-                  lexicalForms: self.get('store').find('lexicalform'),
-                  subjectFields: self.get('store').find('subjectfield'),
-                  representations: self.get('store').find('representation')
-                });
+            function () {
+              return false;
             });
+    },
 
-        //.then(function(hash) {
-                //var rep_promises = [];
-                //var rep_hash = {};
-                //hash.concepts.forEach(function(concept) {
-                    ////TODO limit to languages used by concepts
-                    //rep_hash[concept.get('id')] = rep_hash[concept.get('id')] || {concept: concept, languages: {}};
-                    //hash.languages.forEach(function(lang) {
-                        //var repstring = '';
-                        //rep_hash[concept.get('id')].languages[lang.get('id')] = rep_hash[concept.get('id')].languages[lang.get('id')] || {language: lang, repstring: repstring};
-                        //rep_promises.push(self.get('store').find(
-                            //'representation', {
-                                //lexical_form__lexeme__concept: concept.get('id'),
-                                //lexical_form__lexeme__lexical_class__language: lang.get('id')
-                            //}).then(function(reps) {
-                                //reps.forEach(function(rep) {
-                                    //repstring += rep.get('name') + "\n";
-                                //});
-                                //return reps;
-                            //})
-                        //);
-                    //});
-                //});
-
-                //return Ember.RSVP.all(rep_promises).then(function(replist) {
-                    //hash.representations = rep_hash; //not replist
-                    //return hash;
-                //});
-            //});
+    setupController: function(controller, model) {
+      console.log('called yeah');
+      var self = this;
+      Ember.RSVP.Promise.cast(model).then(
+          function(model) {
+            console.log('got model');
+            if (model) {
+              console.log('returning');
+              console.log(model);
+              return model;
+            } else {
+              console.log('returning hash');
+              return Ember.RSVP.hash({
+                concepts: self.get('store').find('concept'),
+                languages: self.get('store').find('language'),
+                lexicalClasses: self.get('store').find('lexicalclass'),
+                lexemes: self.get('store').find('lexeme'),
+                lexicalForms: self.get('store').find('lexicalform'),
+                subjectFields: self.get('store').find('subjectfield'),
+                representations: self.get('store').find('representation')
+              }).then(function(model) {
+            console.log('setting model');
+            controller.set('model', model);
+        });
+            }
+        });
     },
 
     renderTemplate: function() {

@@ -1,4 +1,7 @@
-var Ltm = window.Ltm = Ember.Application.create();
+var Ltm = window.Ltm = Ember.Application.create({
+  LOG_TRANSITIONS: true,
+  LOG_TRANSITIONS_INTERNAL: true
+});
 
 /* Order and include as you please. */
 require('scripts/controllers/*');
