@@ -1,0 +1,41 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      {{#link-to "index" class="navbar-brand"}}Home{{/link-to}}
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      {{#link-to "lex" collection_id tagName="li"}}
+          <a {{bind-attr href="view.href"}}>Lexicon</a>
+      {{/link-to}}
+      {{#link-to "term" collection_id tagName="li"}}
+          <a {{bind-attr href="view.href"}}>Terminology</a>
+      {{/link-to}}
+      {{!--
+      {{#link-to "tbx" collection_id tagName="li"}}
+          <a {{bind-attr href="view.href"}}>TBX</a>
+      {{/link-to}}
+      {{#link-to "collections" tagName="li"}}
+          <a {{bind-attr href="view.href"}}>Collections</a>
+      {{/link-to}}
+      --}}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    <div class="row">
+        {{#if collection}}
+        <h1>{{collection.name}}</h1>
+        {{else}}
+        </h1>All</h1>
+        {{/if}}
+    </div>
+</div>

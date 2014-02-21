@@ -1,0 +1,23 @@
+{
+  "name": "ember-listview",
+  "version": "0.0.2",
+  "main": "list-view.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/geekingreen/ember-list-view",
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.2",
+    "commit": "ac0dc4e484dee4ba2f14a01fb9e3f2cb8a40943d"
+  },
+  "_source": "git://github.com/geekingreen/ember-list-view.git",
+  "_target": "~0.0.2",
+  "_originalSource": "ember-list-view",
+  "_direct": true
+}

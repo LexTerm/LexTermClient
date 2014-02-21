@@ -1,0 +1,14 @@
+{
+  "name": "ember-table",
+  "homepage": "https://github.com/Addepar/ember-table",
+  "_release": "47f72d7a29",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "47f72d7a296c1ca5fa412ccca6e4bfb396aeb782"
+  },
+  "_source": "git://github.com/Addepar/ember-table.git",
+  "_target": "*",
+  "_originalSource": "ember-table",
+  "_direct": true
+}

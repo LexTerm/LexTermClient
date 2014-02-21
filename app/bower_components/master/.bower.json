@@ -1,0 +1,11 @@
+{
+  "name": "master",
+  "_cacheHeaders": {
+    "Content-Type": "application/x-gzip",
+    "Content-Disposition": "attachment; filename=emberjs-list-view-f7d9223.tar.gz"
+  },
+  "_source": "https://github.com/emberjs/list-view/tarball/master",
+  "_target": "*",
+  "_originalSource": "https://github.com/emberjs/list-view/tarball/master",
+  "_direct": true
+}

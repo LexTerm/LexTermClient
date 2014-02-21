@@ -1,0 +1,10 @@
+node_modules/
+gh_pages/
+build/
+tests/lib
+tests/css
+.DS_Store
+*.swo
+*.swp
+.DS_Store
+doc/

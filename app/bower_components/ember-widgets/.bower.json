@@ -1,0 +1,14 @@
+{
+  "name": "ember-widgets",
+  "homepage": "https://github.com/Addepar/ember-widgets",
+  "_release": "9fadc4d3a2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9fadc4d3a274ac8302a28d2df3be65ed50b736cd"
+  },
+  "_source": "git://github.com/Addepar/ember-widgets.git",
+  "_target": "*",
+  "_originalSource": "ember-widgets",
+  "_direct": true
+}
