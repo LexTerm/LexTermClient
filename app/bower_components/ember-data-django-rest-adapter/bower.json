@@ -1,15 +1,15 @@
 {
   "name": "ember-data-django-rest-adapter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/toranb/ember-data-django-rest-adapter",
   "authors": [
     "Toran Billups <toranb@gmail.com>"
   ],
   "description": "An ember-data adapter for django web applications powered by the django-rest-framework",
-  "main": "src/main.js",
+  "main": "build/ember-data-django-rest-adapter.js",
   "dependencies": {
-      "ember.js": "1.3.0",
-      "ember-data": "1.0.0-beta.4"
+      "ember": "~1.4.0",
+      "ember-data": "~1.0.0-beta.5"
   },
   "keywords": [
     "ember",

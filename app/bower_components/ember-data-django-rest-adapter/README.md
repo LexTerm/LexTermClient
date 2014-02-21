@@ -2,6 +2,20 @@
 
 [![Build Status](https://secure.travis-ci.org/toranb/ember-data-django-rest-adapter.png?branch=master)](https://travis-ci.org/toranb/ember-data-django-rest-adapter) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
+<img src="badge@2x.png" width="130" height="30"> bower install ember-data-django-rest-adapter
+
+## Install
+
+    npm install bower
+    bower install ember-data-django-rest-adapter
+    add the following scripts to your application
+
+    <script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="/bower_components/ember/ember.js"></script>
+    <script type="text/javascript" src="/bower_components/ember-data/ember-data.js"></script>
+    <script type="text/javascript" src="/bower_components/ember-data-django-rest-adapter/build/ember-data-django-rest-adapter.js"></script>
+
 ## Motivation
 - The `django-rest-framework` is a great REST framework for python / django developers
 - The default `ember-data` `RESTAdapter` does not follow the conventions used by the django rest framework
@@ -217,14 +231,14 @@ This adapter was built by the community for the community. If you would like to 
     grunt test
 
 ## Versions
-    ember.js 1.2.0
-    ember-data 1.0 beta 4+ *master build as of 12/19
+    ember.js 1.4.0
+    ember-data 1.0 beta 5
 
 ## Pending Issues
 
     i) Date and DateTime are not yet built into the adapter (see the WIP PR for a workaround)
 
-    ii) Async belongsTo/hasMany requires a pull-request be merged into ember-data core
+    ii) Async belongsTo/hasMany requires a pull-request be merged into ember-data core (see the WIP branch for a workaround)
 
     iii) Pagination is not yet supported
 
@@ -239,7 +253,7 @@ I took a large part of this project (including the motivation) from @escalant3 a
 https://github.com/escalant3/ember-data-tastypie-adapter/
 
 ## License
-Copyright © 2013 Toran Billups http://toranbillups.com
+Copyright © 2014 Toran Billups http://toranbillups.com
 
 Licensed under the MIT License
 

@@ -1,7 +1,0 @@
-node_modules
-dist
-pkg
-*.gem
-
-.DS_Store
-Gemfile.lock
