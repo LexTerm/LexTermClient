@@ -1,9 +1,0 @@
-<h1>Languages</h1>
-<p>{{#link-to 'languages.create'}} Create {{/link-to}}
-<ul>
- {{#each model}}
- <li>{{#link-to 'language' this}}{{this.id}}{{/link-to}}</li>
- {{/each}}
-</ul>
-
-{{outlet}}

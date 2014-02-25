@@ -1,9 +1,12 @@
-/*global Ember*/
 Ltm.Concept = DS.Model.extend({
-    conceptId: DS.attr('string'),
-    definition: DS.attr('string'),
-    subjectFields: DS.hasMany('subjectfield', {async: true}),
-    lexemes: DS.hasMany('lexeme', {async: true})
+  conceptId: DS.attr('string'),
+  definition: DS.attr('string'),
+  subjectFields: DS.hasMany('subjectfield', {async: true}),
+  lexemes: DS.hasMany('lexeme', {async: true}),
+
+  representationMap: function(){
+    console.log(Ember.get(Ltm.Concept, 'url'));
+  }.property('lexemes')
 });
 
 // probably should be mixed-in...
@@ -15,26 +18,3 @@ Ltm.Concept.reopen({
     });
   }.property()
 });
-
-// delete below here if you do not want fixtures
-Ltm.Concept.FIXTURES = [
-
-  {
-    id: 0,
-
-    concept_id: 'foo',
-
-    definition: 'foo'
-
-  },
-
-  {
-    id: 1,
-
-    concept_id: 'foo',
-
-    definition: 'foo'
-
-  }
-
-];

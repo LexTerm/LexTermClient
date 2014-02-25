@@ -5,7 +5,6 @@ Ltm.LinkTableCellView = Ember.Table.TableCell.extend({
         row    = this.get('row');
     if (column && row) {
       var content = this.get('cellContent');
-      console.log(content);
       return content.destination;
     } else {
       //default to entry
@@ -30,7 +29,6 @@ Ltm.LinkTableCellView = Ember.Table.TableCell.extend({
         row    = this.get('row');
     if (column && row) {
       var content = this.get('cellContent');
-      console.log(content);
       return content.inner;
     } else {
       return 'Loading...';

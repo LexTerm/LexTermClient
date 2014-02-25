@@ -1,14 +1,6 @@
 <div class="container">
     <div class="row">
         <ul class="list-inline">
-            <!--li>
-            {{input
-                id="search-field"
-                type="text"
-                placeholder="TODO search"
-                action=search
-            }}
-            </li-->
             <li>
               <!-- Localize this.-->
               <h3>Languages:</h3>
@@ -19,12 +11,12 @@
               selections=activeLanguages
             }}
             </li>
-            {{#if model.subjectFields}}
+            {{#if subjectFields}}
             <li>
               <!-- Localize this.-->
               <h3>Subject Fields:</h3>
              {{multi-select-component
-              content=model.subjectFields
+              content=subjectFields
               optionLabelPath="name"
               classNames="lang-multi-select"
               selections=activeSubjectFields
@@ -37,6 +29,7 @@
 <div class="container">
     <div class="row">
       {{table-component
+        hasFooter=false
         columns=columns
         content=rows
       }}

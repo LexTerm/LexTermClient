@@ -10,9 +10,8 @@
         <div class="well">
             <ul class="nav ">
                 <h2 class="nav-header">Collections</h2>
-                <li>{{#link-to "term" "all"}}All Data{{/link-to}}</li>
                 {{#each}}
-                <li>{{#link-to "term" this.id}}{{name}}{{/link-to}}</li>
+                <li>{{#link-to "term" this}}{{name}}{{/link-to}}</li>
                 {{/each}}
             </ul>
         </div>
