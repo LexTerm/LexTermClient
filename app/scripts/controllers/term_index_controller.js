@@ -7,94 +7,49 @@ var ConceptArrayProxy = Ember.ArrayProxy.extend({
     if (row) {
       return row;
     } else {
-      //row = Ember.Object.create({
-        //id: 'Loading...', // TODO use loading gif
-        //definition: 'Loading...',
-        //isLoaded: false
-      //});
-
-      //Ember.RSVP.hash({
-        //concepts: this.get('concepts'),
-        //languages: this.get('languages'),
-        //representations: this.get('representations')
-        ////lexicalForms: this.get('lexicalForms'),
-        ////lexicalClasses: this.get('lexicalClasses'),
-        ////lexemes: this.get('lexemes')
-      //}).then(function(data) {
-        //var new_content = data.concepts.slice(self.get('start'), self.get('stop')).map(function(concept) {
-          //return Ember.Object.create({
-            //id: concept.get('id'),
-            //definition: concept.get('definition'),
-            //isLoaded: true
-          //});
-        //});
-
-        //self.set('content', new_content);
-
-        var rows = self.get('concepts').slice(self.get('start'), self.get('stop')).map(function(concept) {
-          return Ember.Object.create({
-            id: concept.get('id'),
-            definition: concept.get('definition')
-          });
+      var rows = self.get('concepts').slice(self.get('start'), self.get('stop')).map(function(concept, cind) {
+        var nrow = Ember.Object.create({
+          id: concept.get('conceptId'),
+          definition: concept.get('definition')
         });
 
-
-        var promise = Ember.RSVP.Promise.resolve(1);
-        rows.forEach(function(row) {
-          self.get('languages').forEach(function(lang) {
-            row.set(lang.get('locale'), {inner: 'Loading...', destination: 'entry'});
-            promise.then(function() {
-              self.get('store').find('representation', {
-                lexical_form__lexeme__concept: concept.get('id'),
-                lexical_form__lexeme__lexical_class__language: lang.get('id')
-              }).then(function(reps) {
-                reps.forEach(function(rep) {
-                var old = row.get(lang.get('locale'));
-                if (old.inner === 'Loading...') {
-                  old.inner = rep.get('name');
-                } else {
-                  old.inner += "\n"+rep.get('name');
-                }
-                old.instance = rep.get('lexicalForm').get('lexeme');
-                row.set(lang.get('locale'), old);
-                });
-              });
+        self.get('languages').forEach(function(lang) {
+          nrow.set(lang.get('locale'), {inner: 'Loading...', destination: 'entry'});
+          Ember.RSVP.hash({
+            reps: self.get('store').find('representation', {
+              lexical_form__lexeme__concept: concept.get('id'),
+              lexical_form__lexeme__lexical_class__language: lang.get('id')
+            }),
+            lexeme: self.get('store').find('lexeme', {
+              concept: concept.get('id'),
+              lexical_class__language: lang.get('id')
+            })
+          }).then(function(hash) {
+            var old_content = self.get('content');
+            var old_row = old_content[cind];
+            var old = old_row.get(lang.get('locale'));
+            old.instance =  hash.lexeme.objectAt(0);
+            hash.reps.forEach(function(rep) {
+              if (old.inner === 'Loading...') {
+                old.inner = rep.get('name');
+              } else {
+                old.inner += "\n"+rep.get('name');
+              }
             });
+            old_row.set(lang.get('locale'), old);
+            old_content[cind] = old_row;
           });
         });
-        //data.concepts.forEach(function(concept) {
-          //console.log(concept.get('lexemes').get('lexicalForms'));
-        //});
-        //data.concepts.slice(index, index+20).forEach(function(concept, cind) {
-          //row.set('id', concept.get('conceptId'));
-          //row.set('definition', concept.get('definition'));
-          //data.languages.forEach(function(lang) {
-            //row.set(lang.get('locale'), {inner: 'Loading...', destination: 'entry'});
-            //data.representations.forEach(function(rep) {
-                //if (rep.get('lexicalForm').get('lexeme').get('lexicalClass').get('language') != lang) {
-                  //return;
-                //}
-                //var old = row.get(lang.get('locale'));
-                //if (old.inner === 'Loading...') {
-                  //old.inner = rep.get('name');
-                //} else {
-                  //old.inner += "\n"+rep.get('name');
-                //}
-                //old.instance = rep.get('lexicalForm').get('lexeme');
-                //row.set(lang.get('locale'), old);
-              //});
-            //});
-          //row.set('isLoaded', true);
-        //});
-      //});
+        return nrow;
+      });
       self.set('content', rows);
-      return rows[index]; //index may be incorrect
     }
   }
 });
 
 Ltm.TermIndexController = Ember.Controller.extend({
 
+  start: 0,
   numRows: 20,
 
   activeLanguages: [],
@@ -113,41 +68,11 @@ Ltm.TermIndexController = Ember.Controller.extend({
       });
   }.property('model'),
 
-  concepts: function() {
-    return this.get('store').find('concept', {
-        lexemes__collections: this.get('model').get('id')
-      });
-  }.property('model'),
-
-  representations: function() {
-    return this.get('store').find('representation', {
-        lexical_form__lexeme__collections: this.get('model').get('id')
-      });
-  }.property('model'),
-
-  lexemes: function() {
-    return this.get('store').find('lexeme', {
-        collections: this.get('model').get('id')
-      });
-  }.property('model'),
-
-  lexicalForms: function() {
-    return this.get('store').find('lexicalform', {
-        lexeme__collections: this.get('model').get('id')
-      });
-  }.property('model'),
-
-  lexicalClasses: function() {
-    return this.get('store').find('lexicalclass', {
-        lexemes__collections: this.get('model').get('id')
-      });
-  }.property('model'),
-
   columns: function () {
       var activeLanguages = this.get('activeLanguages');
       var idcol = Ember.Table.ColumnDefinition.create({
           headerCellName: "Concepts",
-          contentPath: "representationMap"
+          contentPath: "id"
       });
       var defcol = Ember.Table.ColumnDefinition.create({
           headerCellName: "Definition",
@@ -172,15 +97,13 @@ Ltm.TermIndexController = Ember.Controller.extend({
     rows: function() {
       return ConceptArrayProxy.create({
         content: new Array(this.get('numRows')),
-        start: 0,
-        stop: this.get('numRows') + 0,
-        concepts: this.get('concepts'),
+        start: this.get('start'),
+        stop: this.get('numRows') + this.get('start'),
+        concepts: this.get('model'),
         languages: this.get('activeLanguages'),
-        //representations: this.get('representations'),
-        //lexemes: this.get('lexemes'),
-        //lexicalForms: this.get('lexicalForms'),
         store: this.get('store')
       });
+
       //return this.get('store').find('concept', {
           //lexemes__collections: this.get('model').get('id')
         //});
