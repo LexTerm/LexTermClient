@@ -1,0 +1,9 @@
+<h1>FeatureValues</h1>
+
+<ul>
+ {{#each model}}
+ <li>{{#link-to 'featurevalue' this}}{{this.id}}{{/link-to}}</li>
+  {{/each}}
+</ul>
+
+{{outlet}}

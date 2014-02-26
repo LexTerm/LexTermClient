@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3" id="leftCol">
+      <ul class="nav nav-stacked" id="sidebar">
+        {{#each langauge in languages}}
+        <li>
+        {{#link-to "lex.entry" collection_id language}}
+          {{this.name}}
+        {{/link-to}}
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="col-md-9">
+      {{outlet}}
+    </div>
+  </div>
+</div>

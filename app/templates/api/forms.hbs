@@ -1,0 +1,9 @@
+<h1>Forms</h1>
+
+<ul>
+ {{#each model}}
+ <li>{{#link-to 'form' this}}{{this.id}}{{/link-to}}</li>
+  {{/each}}
+</ul>
+
+{{outlet}}

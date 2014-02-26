@@ -1,0 +1,9 @@
+<h1>Concepts</h1>
+
+<ul>
+ {{#each model}}
+ <li>{{#link-to 'concept' this}}{{this.id}}{{/link-to}}</li>
+  {{/each}}
+</ul>
+
+{{outlet}}
