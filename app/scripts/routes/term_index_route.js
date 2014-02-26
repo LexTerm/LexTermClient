@@ -1,5 +1,8 @@
 Ltm.TermIndexRoute = Ember.Route.extend({
   model: function(params) {
-    return this.modelFor('collection');
+    var collection = this.modelFor('collection');
+    return this.get('store').find('concept', {
+      lexemes__collections: collection.get('id')
+    });
   }
 });

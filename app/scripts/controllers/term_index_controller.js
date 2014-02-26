@@ -31,7 +31,7 @@ var ConceptArrayProxy = Ember.ArrayProxy.extend({
 
         //self.set('content', new_content);
 
-        var rows = data.concepts.slice(self.get('start'), self.get('stop')).map(function(concept) {
+        var rows = self.get('concepts').slice(self.get('start'), self.get('stop')).map(function(concept) {
           return Ember.Object.create({
             id: concept.get('id'),
             definition: concept.get('definition')
@@ -41,7 +41,7 @@ var ConceptArrayProxy = Ember.ArrayProxy.extend({
 
         var promise = Ember.RSVP.Promise.resolve(1);
         rows.forEach(function(row) {
-          data.languages.forEach(function(lang) {
+          self.get('languages').forEach(function(lang) {
             row.set(lang.get('locale'), {inner: 'Loading...', destination: 'entry'});
             promise.then(function() {
               self.get('store').find('representation', {
