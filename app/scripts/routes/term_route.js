@@ -1,2 +1,1 @@
-Ltm.TermRoute = Ember.Route.extend({
-});
+Ltm.TermRoute = Ember.Route.extend({});

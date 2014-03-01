@@ -1,7 +1,7 @@
 Ltm.EntryRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.get('store').find('lexeme', params.id);
-    },
+    //model: function(params) {
+        //return this.get('store').find('lexeme', params.id);
+    //},
 
     renderTemplate: function() {
         this.render();

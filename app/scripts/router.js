@@ -3,10 +3,12 @@ Ltm.Router.map(function () {
   this.resource('collections', function(){});
   this.resource('collection', {path: 'collection/:collection_id'}, function(){
     this.resource('term', function(){});
-    this.resource('lex', function(){});
+    this.resource('lex', function(){
+      this.route('entry', {path: 'language/:language_id/entries'});
+    });
+    this.resource('entry', {path: 'entry/:lexeme_id'}, function(){});
   });
 
-  this.resource('entry', function(){});
 
   // API routes useful as reference or for the programatically inclined
   //this.resource('api', function() {

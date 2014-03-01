@@ -7,12 +7,10 @@
     "bootstrap-sass": "~3.0.0",
     "ember-table": "*",
     "ember-widgets": "*",
-    "ember-list-view": "~0.0.2"
+    "ember-list-view": "~0.0.2",
+    "scroller": "~1.2.2"
   },
   "devDependencies": {
     "ember-mocha-adapter": "0.1.2"
-  },
-  "resolutions": {
-    "ember": "~1.4.0"
   }
 }
