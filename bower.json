@@ -8,7 +8,8 @@
     "ember-table": "*",
     "ember-widgets": "*",
     "ember-list-view": "~0.0.2",
-    "scroller": "~1.2.2"
+    "scroller": "~1.2.2",
+    "elasticsearch": "~1.5.10"
   },
   "devDependencies": {
     "ember-mocha-adapter": "0.1.2"

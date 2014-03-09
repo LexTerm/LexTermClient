@@ -1,0 +1,24 @@
+{{#each entries}}
+  {{#if lemma}}
+  <h2>{{lemma.name}}</h2>
+  <h4>{{lexId}}</h2>
+  <div>
+    <ul class="list-inline">
+      <li>Language: {{lexicalClass.language.name}}</li>
+      <li>Lexical Class: {{lexicalClass.name}}</li>
+      <li>Concept: {{concept.conceptId}}</li>
+    </ul>
+    <ul>
+      {{#each lexicalForms}}
+      <li>{{form.name}}:
+        {{#each writtenRepresentations}}
+          {{name}}
+        {{/each}}
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+  {{else}}
+  <img src="/images/loading.gif" />
+  {{/if}}
+{{/each}}
