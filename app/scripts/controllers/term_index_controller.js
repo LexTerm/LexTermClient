@@ -1,7 +1,8 @@
 Ltm.TermIndexController = Ember.Controller.extend({
   needs: 'collection',
   start: 0,
-  numRows: 5,
+  scrollSize: 10,
+  numRows: 20,
 
   collection: function() {
     return this.get('controllers.collection.model');
@@ -79,11 +80,10 @@ Ltm.TermIndexController = Ember.Controller.extend({
         });
       }
 
-
       return this.get('entriesProxy').create({
         content: [],
-        //size: this.get('numRows'),
         languages: this.get('activeLanguages'),
+        size: this.get('scrollSize'),
         entries: Ltm.entries.search({
           from: this.get('start'),
           size: this.get('numRows') * this.get('activeLanguages').toArray().length,
@@ -91,144 +91,37 @@ Ltm.TermIndexController = Ember.Controller.extend({
           query: query
         })
       });
-      //var self = this;
-      //var end = this.get('numRows') + this.get('start');
-      //var concepts = this.get('model').filter(function(concept) {
-        //console.log(concept);
-        //console.log(concept.get('subjectFields'));
-        //return self.get('activeSubjectFields').any(function(subjectfield) {
-          //var out = false;
-          //concept.get('subjectFields').forEach(function(field) {
-            ////TODO: determine if we are async here
-            //if (field == subjectfield) {
-              //out = true;
-            //}
-          //});
-          //return out;
-        //});
-      //});
-
-      //var entries_promise;
-      //if (!concepts.length) {
-        //concepts = self.get('model').sortBy('id').slice(self.get('start'), end);
-        //var entries_promise = Ltm.entries.search({
-          //from: self.get('start'),
-          //size: self.get('numRows') * self.get('activeLanguages').toArray().length,
-          //query: {
-            //filtered: {
-              //query: {
-                //nested: {
-                  //path: "collections",
-                  //query: {
-                    //match: {"collections.id": self.get('collection').get('id')}
-                  //}
-                //}
-              //},
-              //filter: {
-                //and: [
-                  //{terms: {
-                    //"lexical_class.language.locale": self.get('activeLanguages').mapBy('locale')
-                    //}
-                  //},
-                  //{terms: {
-                    //"concept.id": concepts.map(function(concept) { return parseInt(concept.get('id')) })
-                    //}
-                  //}
-                //]
-              //}
-            //}
-          //}
-        //});
-      //} else {
-        //concepts = concepts.sortBy('id').slice(self.get('start'), end);
-        //var entries_promise = Ltm.entries.search({
-          //from: self.get('start'),
-          //size: self.get('numRows') * self.get('activeLanguages').toArray().length,
-          //query: {
-            //filtered: {
-              //query: {
-                //nested: {
-                  //path: "collections",
-                  //query: {
-                    //match: {"collections.id": self.get('collection').get('id')}
-                  //}
-                //}
-              //},
-              //filter: {
-                //and: [{
-                  //nested: {
-                      //path: "concept.subject_fields",
-                      //filter: {
-                        //terms: {"concept.subject_fields.id": self.get('activeSubjectFields').mapBy('id')}
-                      //}
-                    //}
-                  //},
-                  //{
-                  //terms: {
-                      //"lexical_class.language.locale": self.get('activeLanguages').mapBy('locale')
-                    //}
-                  //},
-                  //{terms: {
-                    //"concept.id": concepts.map(function(concept) { return parseInt(concept.get('id')) })
-                    //}
-                  //}
-                //]
-              //}
-            //}
-          //}
-        //});
-      //}
-
-      //return concepts.map(function(concept) {
-        //var row = Ember.Object.create({
-          //id: concept.get('conceptId'),
-          //definition: concept.get('definition')
-        //});
-
-        //self.get('activeLanguages').forEach(function(lang) {
-          //row.set(
-            //lang.get('locale'),
-            //Ember.Object.create({
-              //concept: concept,
-              //language: lang,
-              //entries: entries_promise,
-              //store: self.get('store')
-            //})
-          //);
-        //});
-        //return row;
-      //});
     }.property('model', 'start', 'numRows', 'activeLanguages.@each', 'activeSubjectFields.@each'),
 
     entriesProxy: Ember.ArrayProxy.extend({
-      objectAt: function(index) {
+      objectAtContent: function(index) {
         var self = this;
         var content = self.get('content');
         var row = content[index];
-        console.log(row);
         if (row) {
           return row;
         } else {
-          //var size = self.get('size');
-          //var rows = [];
+          // set placeholders
+          var size = self.get('size');
+          var rows = [];
 
-          //var setDefaultLocale = function (lang) {
-              //nrow.set(lang.get('locale'), {num: 1});
-            //};
+          var setDefaultLocale = function (lang) {
+              nrow.set(lang.get('locale'), {});
+            };
 
-          //for (var rind = 0; rind < size; rind++) {
-            //var nrow = Ember.Object.create({
-              //definition: 'Loading...', //TODO Localize self
-              //id: 'Loading...'
-            //});
+          for (var rind = 0; rind < size; rind++) {
+            var nrow = Ember.Object.create({
+              definition: '',
+              id: ''
+            });
 
-            //self.get('languages').forEach(setDefaultLocale);
+            self.get('languages').forEach(setDefaultLocale);
 
-            //rows.push(nrow);
-          //}
+            rows.push(nrow);
+          }
+          self.set('content', rows);
 
-          //self.set('content', rows);
-
+          // load actual entries
           self.get('entries').then(function(data) {
             var rows = [];
             var current;
@@ -238,7 +131,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
               var locale;
               if (eid == current) {
                 locale = entry._source.lexical_class.language.locale;
-                rows[-1].set(locale, entry);
+                rows.get('lastObject').set(locale, entry);
               } else {
                 current = eid;
                 var new_row = Ember.Object.create({
@@ -247,11 +140,10 @@ Ltm.TermIndexController = Ember.Controller.extend({
                 });
                 locale = entry._source.lexical_class.language.locale;
                 new_row.set(locale, entry);
-                rows.push(new_row);
+                rows.pushObject(new_row);
+                self.set('content', rows);
               }
             });
-            console.log(rows);
-            self.set('content', rows);
           });
         }
       }
