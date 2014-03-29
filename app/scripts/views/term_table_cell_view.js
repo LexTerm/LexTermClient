@@ -1,7 +1,6 @@
 Ltm.TermTableCellView = Ember.Table.TableCell.extend({
   templateName: 'term_table_cell',
 
-
   repstring: function() {
     var content = this.get('cellContent');
     if (content && content._source) {

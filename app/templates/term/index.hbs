@@ -34,4 +34,11 @@
         content=rows
       }}
     </div>
+    <div class="row">
+      {{pager-component
+        allPages=pages
+        setLimit="adjustLimit"
+        setStart="adjustStart"
+      }}
+    </div>
 </div>

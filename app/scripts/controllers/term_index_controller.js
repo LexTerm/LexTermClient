@@ -2,7 +2,17 @@ Ltm.TermIndexController = Ember.Controller.extend({
   needs: 'collection',
   start: 0,
   scrollSize: 10,
-  numRows: 20,
+  numRows: 10,
+
+  pages: [],
+
+  adjustLimit: function(value) {
+    this.set('numRows', value);
+  },
+
+  adjustStart: function(value) {
+    this.set('start', value);
+  },
 
   collection: function() {
     return this.get('controllers.collection.model');
@@ -80,16 +90,40 @@ Ltm.TermIndexController = Ember.Controller.extend({
         });
       }
 
-      return this.get('entriesProxy').create({
-        content: [],
-        languages: this.get('activeLanguages'),
-        size: this.get('scrollSize'),
-        entries: Ltm.entries.search({
+      var entries_promise = Ltm.entries.search({
           from: this.get('start'),
           size: this.get('numRows') * this.get('activeLanguages').toArray().length,
           sort: "concept.id",
           query: query
-        })
+        });
+
+      var control = this;
+      entries_promise.then(function(data) {
+        var total = data.hits.total;
+        var num_rows = control.get('numRows');
+        var num_langs = control.get('activeLanguages').toArray().length;
+        var num_pages = Math.ceil(total/ (num_rows * num_langs));
+        var current_page_value = control.get('start');
+        var pages = Array(num_pages);
+        for (var pind = 0; pind < num_pages; pind++) {
+          var page_value = pind * num_rows * num_langs;
+          if (page_value == current_page_value) {
+            pages[pind] = Ember.Object.create({active: true, value: page_value, index: pind + 1});
+          } else {
+            pages[pind] = Ember.Object.create({active: false, value: page_value, index: pind + 1});
+          }
+        }
+        if (!pages.findBy('active')) {
+          pages.get('lastObject').set('active', true);
+        }
+        control.set('pages', pages);
+      });
+
+      return this.get('entriesProxy').create({
+        content: [],
+        languages: this.get('activeLanguages'),
+        size: this.get('scrollSize'),
+        entries: entries_promise
       });
     }.property('model', 'start', 'numRows', 'activeLanguages.@each', 'activeSubjectFields.@each'),
 
