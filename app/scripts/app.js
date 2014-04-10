@@ -19,11 +19,11 @@ Ltm.SearchIndex = Ember.Object.extend({
   }.property('host', 'log'),
 
   search: function(body) {
-    return this.get('es').search({
+    return Ember.RSVP.Promise.cast(this.get('es').search({
       index: this.get('index'),
       type: this.get('type'),
       body: body
-    });
+    }));
   }
 
 });

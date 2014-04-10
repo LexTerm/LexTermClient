@@ -3,3 +3,41 @@
 a {
     cursor: pointer;
 }
+
+#sidebar {
+    background: #f8f8f8;
+    border: 1px solid #dcdcdc;
+}
+
+#sidebar li a {
+    border-radius: 0px;
+    color: #555555;
+}
+
+#sidebar .active a,
+#sidebar .active a:hover {
+    background: #555555;
+    border-color: #e7e7e7;
+    color: #ffffff;
+}
+
+.lexlink {
+    background: #e7e7e7;
+    border-radius: 8px;
+    padding: 8px;
+    margin-right: 1%;
+}
+
+.lexlink:hover {
+    text-decoration: none;
+}
+
+.pagination li a {
+    color: #555555;
+}
+
+.pagination .active a,
+.pagination .active a:hover {
+    background: #555555;
+    border-color: #e7e7e7;
+}

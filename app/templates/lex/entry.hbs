@@ -1,24 +1,49 @@
-{{#each entries}}
-  {{#if lemma}}
-  <h2>{{lemma.name}}</h2>
-  <h4>{{lexId}}</h2>
-  <div>
-    <ul class="list-inline">
-      <li>Language: {{lexicalClass.language.name}}</li>
-      <li>Lexical Class: {{lexicalClass.name}}</li>
-      <li>Concept: {{concept.conceptId}}</li>
-    </ul>
-    <ul>
-      {{#each lexicalForms}}
-      <li>{{form.name}}:
-        {{#each writtenRepresentations}}
-          {{name}}
-        {{/each}}
-      </li>
-      {{/each}}
-    </ul>
+{{!<div class="well">}}
+  {{table-component
+    hasFooter=false
+    columns=columns
+    content=rows
+  }}
+
+  <div class="row">
+    {{pager-component
+      allPages=pages
+      setLimit="adjustLimit"
+      setStart="adjustStart"
+    }}
   </div>
-  {{else}}
+{{!--{{#if entries}}
+  {{#each entries}}
+  <h2>
+    {{#link-to "entry" id}}
+    [{{lex_id}}]
+    {{/link-to}}
+    ({{lexical_class.name}})
+    {{name}}
+  </h2>
+    <div>
+      <!--<ul class="list-inline">-->
+        <!--[><li>Language: {{lexical_class.language.name}}</li><]-->
+        <!--[><li>Lexical Class: {{lexical_class.name}}</li><]-->
+        <!--<li>-->
+          <span>Concept: {{concept.concept_id}}</span>
+          <p>Definition: {{concept.definition}}</p>
+        <!--</li>-->
+      <!--</ul>-->
+      <p>Forms:
+      <ul>
+        {{#each lexical_forms}}
+        <li>{{form.name}}:
+            {{#each representations}}
+              {{name}}
+            {{/each}}
+        </li>
+        {{/each}}
+      </ul>
+      </p>
+    </div>
+  {{/each}}
+{{else}}
   <img src="/images/loading.gif" />
-  {{/if}}
-{{/each}}
+{{/if}}--}}
+{{!</div>}}

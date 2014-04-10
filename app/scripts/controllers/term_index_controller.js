@@ -29,6 +29,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
   activeSubjectFields: [],
 
   subjectFields: function() {
+    //TODO fix the old collection as model reference and probably upgrade to using the index
     return this.get('store').find('subjectfield', {
         concepts__lexemes__collections: this.get('model').get('id')
       });
@@ -102,7 +103,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
         var total = data.hits.total;
         var num_rows = control.get('numRows');
         var num_langs = control.get('activeLanguages').toArray().length;
-        var num_pages = Math.ceil(total/ (num_rows * num_langs));
+        var num_pages = total ? Math.ceil(total / (num_rows * num_langs)) : 0;
         var current_page_value = control.get('start');
         var pages = Array(num_pages);
         for (var pind = 0; pind < num_pages; pind++) {
@@ -113,7 +114,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
             pages[pind] = Ember.Object.create({active: false, value: page_value, index: pind + 1});
           }
         }
-        if (!pages.findBy('active')) {
+        if (!pages.findBy('active') && pages.length) {
           pages.get('lastObject').set('active', true);
         }
         control.set('pages', pages);

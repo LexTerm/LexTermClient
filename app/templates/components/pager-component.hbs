@@ -1,0 +1,24 @@
+<div>
+  <ul class="pagination">
+    {{#each sizes}}
+      {{#if active}}
+      <li class="active"><a>{{value}}</a></li>
+      {{else}}
+      <li><a {{action 'changeLimit' value}}>{{value}}</a></li>
+      {{/if}}
+    {{/each}}
+  </ul>
+  <ul class="pagination pull-right">
+    <li {{bind-attr class="firstDisabled:disabled"}}><a {{action 'goToFirst'}}>First</a></li>
+    <li {{bind-attr class="leftDisabled:disabled"}}><a {{action 'moveLeft'}}>&laquo;</a></li>
+    {{#each pages}}
+      {{#if active}}
+      <li class="active"><a>{{index}}</a></li>
+      {{else}}
+      <li><a {{action 'changePage' value}}>{{index}}</a></li>
+      {{/if}}
+    {{/each}}
+    <li {{bind-attr class="rightDisabled:disabled"}}><a {{action 'moveRight'}}>&raquo;</a></li>
+    <li {{bind-attr class="lastDisabled:disabled"}}><a {{action 'goToLast'}}>Last</a></li>
+  </ul>
+</div>

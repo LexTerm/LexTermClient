@@ -1,17 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-3" id="leftCol">
-      <ul class="nav nav-stacked" id="sidebar">
+    <div class="col-md-2" id="leftCol">
+      <ul class="nav nav-pills nav-stacked" id="sidebar">
         {{#each lang in this}}
-        <li>
-        {{#link-to "lex.entry" collection lang}}
-          {{lang.name}}
+        {{#link-to "lex.entry" collection lang tagName="li"}}
+          <a {{bind-attr href="view.href"}}>{{lang.name}}</a>
         {{/link-to}}
-        </li>
         {{/each}}
       </ul>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-10">
       {{outlet}}
     </div>
   </div>
