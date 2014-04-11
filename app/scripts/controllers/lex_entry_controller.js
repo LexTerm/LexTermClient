@@ -2,7 +2,6 @@ Ltm.LexEntryController = Ember.Controller.extend({
   needs: 'collection',
 
   start: 0,
-  scrollSize: 10,
   numRows: 5,
 
   pages: [],
@@ -42,7 +41,24 @@ Ltm.LexEntryController = Ember.Controller.extend({
         }
       }
     }).then(function(data) {
-      console.log(data);
+      // Set pagination
+      var total = data.hits.total;
+      var num_pages = total ? Math.ceil(total / self.get('numRows')) : 0;
+      var current_page_value = self.get('start');
+      var pages = Array(num_pages);
+      for (var pind = 0; pind < num_pages; pind++) {
+        var page_value = pind * self.get('numRows');
+        if (page_value == current_page_value) {
+          pages[pind] = Ember.Object.create({active: true, value: page_value, index: pind + 1});
+        } else {
+          pages[pind] = Ember.Object.create({active: false, value: page_value, index: pind + 1});
+        }
+      }
+      if (!pages.findBy('active') && pages.length) {
+        pages.get('lastObject').set('active', true);
+      }
+      self.set('pages', pages);
+
       entries.set('content', data.hits.hits.map(function(hit) {
         var entry = Ember.Object.create(hit._source);
         // Set wrtten representation
@@ -64,38 +80,6 @@ Ltm.LexEntryController = Ember.Controller.extend({
       console.log(err);
     });
     return entries;
-  }.property('collection', 'model'),
+  }.property('collection', 'model', 'numRows', 'start')
 
-  columns: function() {
-    var columns = [];
-    columns.pushObject(Ember.Table.ColumnDefinition.create({
-      headerCellName: 'Lexical ID', //TODO localize all of these
-      contentPath: 'lex_id'
-    }));
-    columns.pushObject(Ember.Table.ColumnDefinition.create({
-      headerCellName: 'Lemma',
-      contentPath: 'name'
-    }));
-    columns.pushObject(Ember.Table.ColumnDefinition.create({
-      headerCellName: 'Lexical Class',
-      contentPath: 'lexical_class.name'
-    }));
-    columns.pushObject(Ember.Table.ColumnDefinition.create({
-      headerCellName: 'Concept',
-      contentPath: 'concept.concept_id'
-    }));
-    columns.pushObject(Ember.Table.ColumnDefinition.create({
-      headerCellName: 'Subject Fields',
-      contentPath: 'concept.subject_fields'
-    }));
-    columns.pushObject(Ember.Table.ColumnDefinition.create({
-      headerCellName: 'Forms',
-      contentPath: 'lexical_forms'
-    }));
-    return columns;
-  }.property('entries.@each'),
-
-  rows: function() {
-    return this.get('entries');
-  }.property('entries.@each')
 });

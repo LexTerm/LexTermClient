@@ -4,6 +4,10 @@ a {
     cursor: pointer;
 }
 
+th {
+    background: #f8f8f8;
+}
+
 #sidebar {
     background: #f8f8f8;
     border: 1px solid #dcdcdc;
@@ -54,4 +58,16 @@ a {
     padding: 1%;
     border: 1px solid #dcdcdc;
     margin-top: 0px;
+}
+
+.subject-field-list {
+    margin-bottom: 0px;
+}
+
+.collection-header {
+    padding: 1%;
+    margin: 1% 2%;
+    border: 1px solid #dcdcdc;
+    margin-top: 0px;
+    background: #dae4f6;
 }

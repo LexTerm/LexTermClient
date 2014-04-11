@@ -1,29 +1,37 @@
 <div class="container">
     <div class="row">
-        <ul class="list-inline">
-            <li>
-              <!-- Localize this.-->
-              <h3>Languages:</h3>
-             {{multi-select-component
-              content=languages
-              optionLabelPath="name"
-              classNames="lang-multi-select"
-              selections=activeLanguages
-            }}
-            </li>
+      <div class="col-md-12">
+        <table class="table table-bordered">
+          <tr>
+            <th>Languages</th>
+
             {{#if subjectFields}}
-            <li>
-              <!-- Localize this.-->
-              <h3>Subject Fields:</h3>
-             {{multi-select-component
-              content=subjectFields
-              optionLabelPath="name"
-              classNames="lang-multi-select"
-              selections=activeSubjectFields
-            }}
-            </li>
+            <th>Subject Fields</th>
             {{/if}}
-        </ul>
+          </tr>
+          <tr>
+            <td>
+              {{multi-select-component
+                content=languages
+                optionLabelPath="name"
+                classNames="lang-multi-select"
+                selections=activeLanguages
+              }}
+            &nbsp;<span>Click field to select languages.</span>
+            </td>
+            {{#if subjectFields}}
+            <td>
+               {{multi-select-component
+                content=subjectFields
+                optionLabelPath="name"
+                classNames="lang-multi-select"
+                selections=activeSubjectFields
+               }}
+              &nbsp;<span>Click field to select subject fields.</span>
+            </td>
+            {{/if}}
+        </table>
+      </div>
     </div>
 </div>
 <div class="container">
