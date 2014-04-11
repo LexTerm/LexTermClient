@@ -21,7 +21,7 @@ Ltm.LexEntryController = Ember.Controller.extend({
 
   entries: function() {
     var self = this;
-    var entries = Ember.ArrayProxy.create({content: Array(this.get('numRows'))});
+    var entries = Ember.ArrayProxy.create({content: []});
     var hi = Ltm.entries.search({
       from: this.get('start'),
       size: this.get('numRows'),
@@ -45,12 +45,17 @@ Ltm.LexEntryController = Ember.Controller.extend({
       console.log(data);
       entries.set('content', data.hits.hits.map(function(hit) {
         var entry = Ember.Object.create(hit._source);
+        // Set wrtten representation
+        entry.get('lexical_forms').forEach(function(lex_form) {
+          lex_form.written_representation = lex_form.representations
+                                                    .find(function(rep) {
+                                                      return rep.representation_type.name == 'written'; // note magic word
+                                                    });
+        });
+        // Get lemma
         var lemma = entry.get('lexical_forms')
                          .findBy('is_lemma')
-                         .representations
-                         .find(function(rep) {
-                             return rep.representation_type.name == 'written'; // note magic word
-                         })
+                         .written_representation
                          .name;
         entry.set('name', lemma);
         return entry;

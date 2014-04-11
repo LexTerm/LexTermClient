@@ -1,49 +1,87 @@
-{{!<div class="well">}}
-  {{table-component
-    hasFooter=false
-    columns=columns
-    content=rows
-  }}
+<div class="row">
 
-  <div class="row">
-    {{pager-component
-      allPages=pages
-      setLimit="adjustLimit"
-      setStart="adjustStart"
-    }}
-  </div>
-{{!--{{#if entries}}
+{{#if entries}}
   {{#each entries}}
-  <h2>
-    {{#link-to "entry" id}}
-    [{{lex_id}}]
-    {{/link-to}}
-    ({{lexical_class.name}})
-    {{name}}
-  </h2>
-    <div>
-      <!--<ul class="list-inline">-->
-        <!--[><li>Language: {{lexical_class.language.name}}</li><]-->
-        <!--[><li>Lexical Class: {{lexical_class.name}}</li><]-->
-        <!--<li>-->
-          <span>Concept: {{concept.concept_id}}</span>
-          <p>Definition: {{concept.definition}}</p>
-        <!--</li>-->
-      <!--</ul>-->
-      <p>Forms:
-      <ul>
-        {{#each lexical_forms}}
-        <li>{{form.name}}:
-            {{#each representations}}
-              {{name}}
-            {{/each}}
-        </li>
-        {{/each}}
-      </ul>
-      </p>
+  <div class="lexical-entry">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="entry-header">
+          {{#link-to "entry" id}}
+            {{name}}
+          {{/link-to}}
+        </h3>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="entry-definition">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {{concept.definition}}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="list-inline">
+          <li>
+            <strong class="lexterm-attr-name">Lexical ID: </strong>
+            <span>{{lex_id}}</span>
+          </li>
+          <li>
+            <strong class="lexterm-attr-name">Lexical Class: </strong>
+            <span>{{lexical_class.name}}</span>
+          </li>
+        </ul>
+        <ul class="list-inline">
+          <li>
+              <strong class="lexterm-attr-name">Concept: </strong>
+              <span>{{concept.concept_id}}</span>
+          </li>
+          <li>
+            <ul class="list-inline">
+              <strong class="lexterm-attr-name">Subject Fields:</strong>
+              {{#each field in concept.subject_fields}}
+              <li>
+                {{field.name}}
+              </li>
+              {{/each}}
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <table class="table-bordered table-condensed form-table">
+          <tr><th>Form Name</th><th>Features</th><th>Written Representation</th></tr>
+          {{#each lex_form in lexical_forms}}
+          <tr>
+            <td>{{lex_form.form.name}}</td>
+            <td>
+              <ul class="list-inline">
+                {{#each feature in lex_form.form.features}}
+                <li>
+                  {{feature.name}}
+                </li>
+                {{/each}}
+              </ul>
+            </td>
+            <td>{{lex_form.written_representation.name}}</td>
+          </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </div>
+  <br />
   {{/each}}
 {{else}}
   <img src="/images/loading.gif" />
-{{/if}}--}}
-{{!</div>}}
+{{/if}}
+</div>
+
+<div class="row">
+  {{pager-component
+    allPages=pages
+    setLimit="adjustLimit"
+    setStart="adjustStart"
+  }}
+</div>
