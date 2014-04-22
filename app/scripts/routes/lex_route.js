@@ -5,4 +5,5 @@ Ltm.LexRoute = Ember.Route.extend({
       lexical_classes__lexemes__collections: collection.get('id')
     });
   }
+
 });

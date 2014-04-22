@@ -1,7 +1,7 @@
 /*global Ember*/
 Ltm.Language = DS.Model.extend({
     langCode: DS.attr('string'),
-    regionCode: DS.attr('string'),
+    regionCode: DS.attr('string', {defaultValue: ''}),
     name: DS.attr('string'),
     lexicalClasses: DS.hasMany('lexicalclass', {async: true}),
 
@@ -19,30 +19,3 @@ Ltm.Language.reopen({
     });
   }.property()
 });
-
-// delete below here if you do not want fixtures
-Ltm.Language.FIXTURES = [
-
-  {
-    id: 0,
-
-    lang_code: 'foo',
-
-    name: 'foo',
-
-    lexical_classes: 'foo'
-
-  },
-
-  {
-    id: 1,
-
-    lang_code: 'foo',
-
-    name: 'foo',
-
-    lexical_classes: 'foo'
-
-  }
-
-];

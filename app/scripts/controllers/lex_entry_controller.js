@@ -16,12 +16,12 @@ Ltm.LexEntryController = Ember.Controller.extend({
 
   collection: function() {
     return this.get('controllers.collection.model');
-  }.property(),
+  }.property('model'),
 
   entries: function() {
     var self = this;
     var entries = Ember.ArrayProxy.create({content: []});
-    var hi = Ltm.entries.search({
+    Ltm.entries.search({
       from: this.get('start'),
       size: this.get('numRows'),
       sort: "lexical_forms.representations.name",

@@ -1,11 +1,16 @@
 Ltm.EntryRoute = Ember.Route.extend({
-    //model: function(params) {
-        //return this.get('store').find('lexeme', params.id);
-    //},
-
-    renderTemplate: function() {
-        this.render();
-        this.render('header', {outlet: 'header'});
+  actions: {
+    deleteEntry: function() {
+      this.controllerFor('entry.delete').set('loading', true);
+      var lexeme = this.modelFor('entry');
+      lexeme.deleteRecord();
+      lexeme.save();
+      Ember.run.later(this, function() {
+        var collection = this.modelFor('collection');
+        this.transitionTo('term').then(function() {
+          window.location.reload();
+        });
+      }, 1000);
     }
-
+  }
 });

@@ -1,0 +1,27 @@
+<td>
+    {{select-component
+      content=forms
+      optionLabelPath="name"
+      selection=nextForm
+    }}
+    &nbsp;
+    {{#unless lexForm.isLemma}}
+    <button type="button" class="btn btn-default" {{action 'makeLemma'}}>Make Lemma</button>
+    {{/unless}}
+</td>
+<td>
+  <ul class="list-inline">
+    {{#each feature in lexForm.form.features}}
+    <li>
+      {{feature.name}}
+    </li>
+    {{/each}}
+  </ul>
+</td>
+<td>
+  {{#if isEditing}}
+  <img src="/images/loading.gif" />
+  {{else}}
+    {{input value=lexForm.writtenRepresentation.name action="editWrittenRepresentation" class="form-control"}}
+  {{/if}}
+</td>

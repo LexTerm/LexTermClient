@@ -1,0 +1,30 @@
+<div class="modal-content entry-edit">
+  <div class="modal-header">
+    <h4 class="modal-title">New Feature</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-inline" role="form">
+      <p>Entering new feature type and feature value names in the select will create new instances.</p>
+      <div class="form-group">
+        {{editable-select
+          content=features
+          optionLabelPath="name"
+          prompt="Feature Type"
+          selection=feature
+        }}
+      </div>
+      <div class="form-group">
+        {{editable-select
+          content=values
+          optionLabelPath="name"
+          prompt="Feature Value"
+          selection=value
+        }}
+      </div>
+    <button type="button" class="btn btn-default" {{action 'save'}}>Save</button>
+    {{#if loading}}
+    <img src="/images/loading.gif" />
+    {{/if}}
+    </div>
+  </div>
+</div>

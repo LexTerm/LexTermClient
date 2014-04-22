@@ -1,12 +1,8 @@
 Ltm.Concept = DS.Model.extend({
   conceptId: DS.attr('string'),
-  definition: DS.attr('string'),
+  definition: DS.attr('string', {defaultValue: ''}),
   subjectFields: DS.hasMany('subjectfield', {async: true}),
-  lexemes: DS.hasMany('lexeme', {async: true}),
-
-  representationMap: function(){
-    console.log(Ember.get(Ltm.Concept, 'url'));
-  }.property('lexemes')
+  lexemes: DS.hasMany('lexeme', {async: true})
 });
 
 // probably should be mixed-in...

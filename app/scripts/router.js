@@ -6,9 +6,25 @@ Ltm.Router.map(function () {
     this.resource('lex', function(){
       this.route('entry', {path: 'language/:language_id/entries'});
     });
-    this.resource('entry', {path: 'entry/:lexeme_id'}, function(){});
+    this.resource('entry', {path: 'entry/:lexeme_id'}, function(){
+      this.route('delete');
+      this.route('language');
+      this.route('lexicalclass');
+      this.route('concept');
+      this.route('subjectfield');
+      this.route('form');
+      this.route('features');
+    });
+
+    this.resource('entries', {}, function () {
+      this.route('language');
+      this.route('concept');
+    });
+
+    this.resource('tbx', function() {});
   });
 
+  this.route('new-entry');
 
   // API routes useful as reference or for the programatically inclined
   //this.resource('api', function() {

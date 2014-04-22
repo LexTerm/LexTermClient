@@ -14,22 +14,3 @@ Ltm.Featurevalue.reopen({
     });
   }.property()
 });
-
-// delete below here if you do not want fixtures
-Ltm.Featurevalue.FIXTURES = [
-
-  {
-    id: 0,
-
-    name: 'foo'
-
-  },
-
-  {
-    id: 1,
-
-    name: 'foo'
-
-  }
-
-];

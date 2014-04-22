@@ -6,8 +6,6 @@ Ltm.LexController = Ember.Controller.extend({
       return this.store.find('language', {
         lexical_classes__lexemes__collections: model.collection.get('id')
       });
-    } else {
-      console.log('handle the case of all after pagination is implemented');
     }
   }.property('model')
 

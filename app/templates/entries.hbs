@@ -1,0 +1,52 @@
+
+<div class="row">
+  <div class="col-md-12">
+      {{outlet}}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="modal-content entry-edit">
+      <div class="modal-header">
+        <h4 class="modal-title">New Entry</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form" role="form">
+          <div class="form-group">
+            {{input placeholder="Lemma" value=lemmaName class="form-control required"}}
+          </div>
+          <div class="form-group">
+            {{input placeholder="Lexical ID" value=lexId class="form-control required" }}
+          </div>
+          <div class="form-group">
+              {{#link-to "entries.language"}}
+               <span class="util glyphicon glyphicon-plus"></span>
+              {{/link-to}}
+              {{select-component
+                content=languages
+                prompt="Language"
+                optionLabelPath="name"
+                selection=language
+              }}
+          </div>
+          <div class="form-group">
+              {{#link-to "entries.concept"}}
+               <span class="util glyphicon glyphicon-plus"></span>
+              {{/link-to}}
+            {{select-component
+              content=concepts
+              optionLabelPath="conceptId"
+              prompt="Concept"
+              selection=concept
+            }}
+          </div>
+        <button type="button" class="btn btn-default" {{action 'save'}}>Save</button>
+        {{#if loading}}
+        <img src="/images/loading.gif" />
+        {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="modal-content entry-edit">
+  <div class="modal-header">
+    <h4 class="modal-title">New Subject Field</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-inline" role="form">
+      <div class="form-group">
+        {{input placeholder="Name" value=name class="form-control required" }}
+      </div>
+    <button type="button" class="btn btn-default" {{action 'save'}}>Save</button>
+    {{#if loading}}
+    <img src="/images/loading.gif" />
+    {{/if}}
+    </div>
+  </div>
+</div>

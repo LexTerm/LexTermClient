@@ -1,6 +1,6 @@
 /*global Ember*/
 Ltm.Representation = DS.Model.extend({
-    name: DS.attr('string'),
+    name: DS.attr('string', {defaultValue: '*'}),
     representationType: DS.belongsTo('representationtype'),
     lexicalForm: DS.belongsTo('lexicalform')
 });
@@ -14,22 +14,3 @@ Ltm.Representation.reopen({
     });
   }.property()
 });
-
-// delete below here if you do not want fixtures
-Ltm.Representation.FIXTURES = [
-
-  {
-    id: 0,
-
-    name: 'foo'
-
-  },
-
-  {
-    id: 1,
-
-    name: 'foo'
-
-  }
-
-];

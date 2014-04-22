@@ -14,22 +14,3 @@ Ltm.Lexicalclass.reopen({
     });
   }.property()
 });
-
-// delete below here if you do not want fixtures
-Ltm.Lexicalclass.FIXTURES = [
-  
-  {
-    id: 0,
-    
-    name: 'foo'
-    
-  },
-  
-  {
-    id: 1,
-    
-    name: 'foo'
-    
-  }
-  
-];

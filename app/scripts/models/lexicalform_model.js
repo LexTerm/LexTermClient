@@ -4,13 +4,14 @@ Ltm.Lexicalform = DS.Model.extend({
     lexeme: DS.belongsTo('lexeme'),
     representations: DS.hasMany('representation', {async: true}),
 
-    writtenRepresentations: function() {
-        var proxy = Ember.ArrayProxy.create();
+    writtenRepresentation: function() {
+        var proxy = Ember.ObjectProxy.create();
         this.get('store').find('representation', {
             lexical_form: this.get('id'),
             representation_type__name: 'written'
         }).then(function(reps) {
-            proxy.set('content', reps);
+          var rep = reps.get('firstObject');
+          proxy.set('content', rep);
         });
         return proxy;
     }.property('representations.@each')

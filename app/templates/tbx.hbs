@@ -1,0 +1,14 @@
+<span class="btn btn-default btn-file">
+  {{#if uploadMessage}}
+    {{uploadMessage}}
+  {{else}}
+    <img src="/images/loading.gif" />
+  {{/if}}
+  {{file-upload
+    url=uploadUrl
+    collection=collection
+    displayStatus="changeUploadMessage"
+    redirect="redirectToTerminology"
+  }}
+</span>
+

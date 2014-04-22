@@ -1,18 +1,150 @@
-<h2>{{lemma.name}}</h2>
-<h4>{{lexId}}</h2>
-<div>
-  <ul class="list-inline">
-    <li>Language: {{lexicalClass.language.name}}</li>
-    <li>Lexical Class: {{lexicalClass.name}}</li>
-    <li>Concept: {{concept.conceptId}}</li>
-  </ul>
-  <ul>
-    {{#each lexicalForms}}
-    <li>{{form.name}}:
-      {{#each writtenRepresentations}}
-        {{name}}
-      {{/each}}
-    </li>
-    {{/each}}
-  </ul>
+
+<div class="row">
+  <div class="col-md-12">
+      {{outlet}}
+  </div>
+</div>
+<div class="lexical-entry">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="entry-header">
+            {{#if lemma}}
+            {{lemma.name}}
+            {{else}}
+            <img src="/images/loading.gif" />
+            {{/if}}
+            {{#link-to "entry.delete" collection.id id}}
+            <span class="util glyphicon glyphicon-remove pull-right"></span>
+            {{/link-to}}
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="entry-definition">
+            {{textarea value=concept.definition rows="5" action="editDefinition" class="form-control"}}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Lexicon</h4>
+          <table class="table table-bordered">
+            <tr>
+                <th>Lexical ID</th>
+                <th>Language
+                    {{#link-to "entry.language" collection.id id}}
+                     <span class="util glyphicon glyphicon-plus pull-right"></span>
+                    {{/link-to}}
+                </th>
+                <th>Lexical Class
+                    {{#link-to "entry.lexicalclass" collection.id id}}
+                     <span class="util glyphicon glyphicon-plus pull-right"></span>
+                    {{/link-to}}
+                </th>
+            </tr>
+            <tr>
+              <td>
+                  {{input value=lexId action="editLexId" class="form-control"}}
+              </td>
+              <td>
+                  {{select-component
+                    content=languages
+                    optionLabelPath="name"
+                    selection=nextLanguage
+                  }}
+              </td>
+              <td>
+                  {{select-component
+                    content=lexicalClass.language.lexicalClasses
+                    optionLabelPath="name"
+                    selection=nextLexicalClass
+                  }}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h4>Terminology</h4>
+          <table class="table table-bordered">
+            <tr>
+                <th>Concept
+                    {{#link-to "entry.concept" collection.id id}}
+                     <span class="util glyphicon glyphicon-plus pull-right"></span>
+                    {{/link-to}}
+                </th>
+                <th>Subject Fields
+                    {{#link-to "entry.subjectfield" collection.id id}}
+                     <span class="util glyphicon glyphicon-plus pull-right"></span>
+                    {{/link-to}}
+                </th>
+            </tr>
+            <tr>
+              <td>
+                  {{select-component
+                    content=concepts
+                    optionLabelPath="conceptId"
+                    selection=nextConcept
+                  }}
+              </td>
+              <td>
+                  <ul class="list-unstyled subject-field-list">
+                    {{#each field in concept.subjectFields}}
+                    <li class="subject-field">
+                        <span class="subject-field-name">{{field.name}}</span>
+                        <span class="util glyphicon glyphicon-remove" {{action "removeSubjectField" field}}></span>
+                    </li>
+                    {{/each}}
+                    <li>
+                      {{select-component
+                        content=filteredSubjectFields
+                        optionLabelPath="name"
+                        prompt="Add Subject Field"
+                        selection=proposedSubjectField
+                      }}
+                    </li>
+                  </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-12">
+          <h4>Paradigm</h4>
+          <table class="table table-bordered form-table">
+            <tr>
+                <th>Form Name
+                    {{#link-to "entry.form" collection.id id}}
+                     <span class="util glyphicon glyphicon-plus pull-right"></span>
+                    {{/link-to}}
+                </th>
+                <th>Features
+                    {{#link-to "entry.features" collection.id id}}
+                     <span class="util glyphicon glyphicon-plus pull-right"></span>
+                    {{/link-to}}
+                </th>
+                <th>Written Representation</th>
+            </tr>
+            {{#each lex_form in lexicalForms}}
+                {{lexical-form
+                  lexForm=lex_form
+                  forms=filteredForms
+                  updateFormListeners="updateFormListeners"}}
+            {{/each}}
+            <tr>
+              <td colspan="3">
+                {{select-component
+                  content=filteredForms
+                  optionLabelPath="name"
+                  prompt="Add Lexical Form"
+                  selection=nextLexicalForm
+                }}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
