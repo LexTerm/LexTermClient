@@ -3,13 +3,16 @@
       <div class="col-md-12">
         <table class="table table-bordered">
           <tr>
+            <th>Search</th>
             <th>Languages</th>
-
             {{#if subjectFields}}
             <th>Subject Fields</th>
             {{/if}}
           </tr>
           <tr>
+            <td>
+              {{input class="form-control" value=_query_term action="setQueryTerm"}}
+            </td>
             <td>
               {{multi-select-component
                 content=languages
@@ -17,7 +20,8 @@
                 classNames="lang-multi-select"
                 selections=activeLanguages
               }}
-            &nbsp;<span>Click field to select languages.</span>
+              <br />
+              <span>Click field to select languages.</span>
             </td>
             {{#if subjectFields}}
             <td>
@@ -27,7 +31,8 @@
                 classNames="lang-multi-select"
                 selections=activeSubjectFields
                }}
-              &nbsp;<span>Click field to select subject fields.</span>
+              <br />
+              <span>Click field to select subject fields.</span>
             </td>
             {{/if}}
         </table>

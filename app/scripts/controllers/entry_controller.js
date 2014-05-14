@@ -156,6 +156,7 @@ Ltm.EntryController = Ember.ObjectController.extend({
   subjectFieldObserver: function() {
     if (this.get('proposedSubjectField')) {
       this.get('model.concept.subjectFields').pushObject(this.get('proposedSubjectField'));
+      this.get('model.concept').save();
       this.set('proposedSubjectField', null);
     }
   }.observes('proposedSubjectField')

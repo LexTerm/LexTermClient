@@ -1,10 +1,12 @@
 Ltm.LexEntryController = Ember.Controller.extend({
-  needs: 'collection',
+  needs: ['collection', 'lex'],
 
   start: 0,
   numRows: 5,
 
   pages: [],
+
+  searchCompleted: true,
 
   adjustLimit: function(value) {
     this.set('numRows', value);
@@ -18,9 +20,37 @@ Ltm.LexEntryController = Ember.Controller.extend({
     return this.get('controllers.collection.model');
   }.property('model'),
 
+  queryTerm: function() {
+    return this.get('controllers.lex.queryTerm');
+  }.property('controllers.lex.queryTerm'),
+
   entries: function() {
     var self = this;
+    self.set('searchCompleted', false);
     var entries = Ember.ArrayProxy.create({content: []});
+    var query_term = self.get('queryTerm');
+    var filter;
+    if (query_term) {
+      filter = {
+        and: [
+          {
+            term: {"lexical_class.language.locale": this.get('model').get('locale')}
+          },
+          {
+            nested: {
+              path: "lexical_forms.representations",
+              filter: {
+                prefix: {"lexical_forms.representations.name": query_term}
+              }
+            }
+          }
+        ]
+      };
+    } else {
+      filter = {
+        term: {"lexical_class.language.locale": this.get('model').get('locale')}
+      };
+    }
     Ltm.entries.search({
       from: this.get('start'),
       size: this.get('numRows'),
@@ -35,12 +65,11 @@ Ltm.LexEntryController = Ember.Controller.extend({
               }
             }
           },
-          filter: {
-              term: {"lexical_class.language.locale": this.get('model').get('locale')}
-          }
+          filter: filter
         }
       }
     }).then(function(data) {
+      self.set('searchCompleted', true);
       // Set pagination
       var total = data.hits.total;
       var num_pages = total ? Math.ceil(total / self.get('numRows')) : 0;
@@ -80,6 +109,6 @@ Ltm.LexEntryController = Ember.Controller.extend({
       console.log(err);
     });
     return entries;
-  }.property('collection', 'model', 'numRows', 'start')
+  }.property('collection', 'model', 'numRows', 'start', 'queryTerm')
 
 });

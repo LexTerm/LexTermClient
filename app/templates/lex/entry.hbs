@@ -1,5 +1,4 @@
 <div class="row">
-
 {{#if entries}}
   {{#each entries}}
   <div class="lexical-entry">
@@ -70,7 +69,19 @@
   <br />
   {{/each}}
 {{else}}
+  {{#if searchCompleted}}
+  <div class="lexical-entry">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="entry-header">
+          No Entries Found
+        </h3>
+      </div>
+    </div>
+  </div>
+  {{else}}
   <img src="/images/loading.gif" />
+  {{/if}}
 {{/if}}
 </div>
 

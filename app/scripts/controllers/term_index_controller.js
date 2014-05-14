@@ -3,8 +3,20 @@ Ltm.TermIndexController = Ember.Controller.extend({
   start: 0,
   scrollSize: 10,
   numRows: 10,
+  _query_term: null,
 
   pages: [],
+
+  queryTerm: function (key, value) {
+    if (value) {
+      this.set('_query_term', value.toLowerCase());
+    }
+    return this.get('_query_term');
+  }.property('_query_term'),
+
+  setQueryTerm: function(value) {
+    this.set('queryTerm', value);
+  },
 
   adjustLimit: function(value) {
     this.set('numRows', value);
@@ -91,6 +103,17 @@ Ltm.TermIndexController = Ember.Controller.extend({
         });
       }
 
+      if (this.get('queryTerm')) {
+        query.filtered.filter.and.push({
+          nested: {
+            path: "lexical_forms.representations",
+            filter: {
+              prefix: {"lexical_forms.representations.name": this.get('queryTerm')}
+            }
+          }
+        });
+      }
+
       var entries_promise = Ltm.entries.search({
           from: this.get('start'),
           size: this.get('numRows') * this.get('activeLanguages').toArray().length,
@@ -126,7 +149,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
         size: this.get('scrollSize'),
         entries: entries_promise
       });
-    }.property('model', 'start', 'numRows', 'activeLanguages.@each', 'activeSubjectFields.@each'),
+    }.property('model', 'start', 'numRows', 'queryTerm', 'activeLanguages.@each', 'activeSubjectFields.@each'),
 
     entriesProxy: Ember.ArrayProxy.extend({
       objectAtContent: function(index) {
