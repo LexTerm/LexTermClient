@@ -41,6 +41,7 @@ Ltm.EntriesController = Ember.ObjectController.extend({
               name: self.get('lemmaName')
             });
             rep.save().then(function() {
+              self.set('loading', false);
               window.location.reload();
             });
           });
@@ -51,6 +52,7 @@ Ltm.EntriesController = Ember.ObjectController.extend({
             name: self.get('lemmaName')
           });
           rep.save().then(function() {
+            self.set('loading', false);
             window.location.reload();
           });
         }
@@ -79,6 +81,7 @@ Ltm.EntriesController = Ember.ObjectController.extend({
   actions: {
     save: function() {
       var self = this;
+      self.set('loading', true);
       var lexeme = self.get('model');
       lexeme.get('collections').then(function(collections) {collections.pushObject(self.get('collection'));});
       var language = self.get('language');
