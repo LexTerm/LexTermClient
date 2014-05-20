@@ -3,22 +3,22 @@ Terminologists
 -----------
 If you have terminology that hasn't been integrated into the LexTerm Manager,
  you can import the terminology by following the instructions for [importing an existing TBX termbase] (#tbx) or
-[manually creating entries](#new-entry). Once your terminology has been entered in the manager, you can access the data by
+[manually creating entries](#help-new-entry). Once your terminology has been entered in the manager, you can access the data by
  clicking on the "Terminology" link in the top navigation bar to navigate to the [terminology perspective](#term).
 
 The [terminology perspective](#term) allows you to view terms across multiple languages. You can also search for
 specific terms using the search box in the top left. Terms are ordered by their concept id. If you want to add
 a new term to a concept, copy the concept id for the concept you wish to extend, then click "New Entry" to [create
-a new entry](#new-entry) with that concept in another language.
+a new entry](#help-new-entry) with that concept in another language.
 
 
 <a name="translators"></a>
 Lexicographers
 -----------
 If TBX files are available, they can be a good way to [bootstrap the lexicon](#tbx). Sadly there is not as yet
-any import functionality for LMF formats. However, you can [create new entries](#new-entry) and [expand the
-paradigms for existing entries](#edit-entry) manually. To lookup an entry, use the [lexicon perspective](#lexicon).
-The [lexicon perspective](#lexicon) has a search box in the top left corner. This searchbox will filter entries
+any import functionality for LMF formats. However, you can [create new entries](#help-new-entry) and [expand the
+paradigms for existing entries](#edit-entry) manually. To lookup an entry, use the [lexicon perspective](#lex).
+The [lexicon perspective](#lex) has a search box in the top left corner. This searchbox will filter entries
 to only those that have a written representation of a form that matches the query. For example, searching for "cats"
 with match entries with the lemma "cat" so long as there is a form with a value "cats" for that entry. Click on the
 title of the entry to edit that entry.
@@ -50,7 +50,7 @@ Importing an existing TBX termbase
 ### Warning: Termbases larger than 1mb will take very long to process and may not complete on some servers.
 
 
-<a name="new-entry"></a>
+<a name="help-new-entry"></a>
 Creating New Entries
 -----------
 To add a new entry to the LexTerm Manager, click the "New Entry" link in the top navigation bar. Each new entry
@@ -114,11 +114,11 @@ the name "noun-plural" to be used with nouns that have a number feature by enter
 in the new form dialog field "Name" and selecting the plural feature in the multiselect on the same dialog.
 To add this new form to the entry, click the "Add Lexical Form" button and select the noun-plural form.
 This will add a new row to the paradigm with a placeholder (i.e. "\*") for the written representation of that
-form. You can then fill in the written representation of the form and hit <Enter> to save it in the paradigm.
+form. You can then fill in the written representation of the form and hit \<Enter\> to save it in the paradigm.
 Assuming you were working on an entry for the term "cat" in English, the written representation of the
 noun-plural form would be "cats".
 
-*Note: To save most parts of the entry, simply hid <Enter>. Selections are automatically saved.
+*Note: To save most parts of the entry, simply hit \<Enter\>. Selections are automatically saved.
  In order to save a definition, you must hit \<Enter\> while the cursor is inside the definition.*
 
 *Note: For developers --- All data on the server may be created, retrieved, updated, and deleted via the
@@ -130,7 +130,7 @@ RESTful API, which has a human readable browseable interface accessible under [/
 Terminology Perspective
 -----------
 In order to view the terminology perspective, there must be entries for the LexTerm Manager to access. If the
-"Terminology" link does not appear in the top navigation bar, you need to either [manually create entries](#new-entry)
+"Terminology" link does not appear in the top navigation bar, you need to either [manually create entries](#help-new-entry)
  or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the terminology perspective
 becomes available by clicking the "Terminology" link in the top navigation bar.
 
@@ -154,7 +154,7 @@ particular term.
 Lexicon Perspective
 -----------
 In order to view the lexicon perspective, there must be entries for the LexTerm Manager to access. If the
-"Lexicon" link does not appear in the top navigation bar, you need to either [manually create entries](#new-entry)
+"Lexicon" link does not appear in the top navigation bar, you need to either [manually create entries](#help-new-entry)
  or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the lexicon perspective
 becomes available by clicking the "Lexicon" link in the top navigation bar.
 
