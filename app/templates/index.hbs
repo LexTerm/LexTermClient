@@ -10,9 +10,9 @@
       <p>If you have terminology that hasn't been integrated into the LexTerm Manager,
       you can import the terminology by following the instructions for <a href="#tbx">importing an existing TBX termbase</a> or
       <a href="#help-new-entry">manually creating entries</a>. Once your terminology has been entered in the manager, you can access the data by
-      clicking on the "Terminology" link in the top navigation bar to navigate to the <a href="#term">terminology perspective</a>.</p>
+      clicking on the "Terminology" link in the top navigation bar to navigate to the <a href="#term">terminology view</a>.</p>
 
-      <p>The <a href="#term">terminology perspective</a> allows you to view terms across multiple languages. You can also search for
+      <p>The <a href="#term">terminology view</a> allows you to view terms across multiple languages. You can also search for
       specific terms using the search box in the top left. Terms are ordered by their concept id. If you want to add
       a new term to a concept, copy the concept id for the concept you wish to extend, then click "New Entry" to <a href="#help-new-entry">create
         a new entry</a> with that concept in another language.</p>
@@ -23,8 +23,8 @@
 
       <p>If TBX files are available, they can be a good way to <a href="#tbx">bootstrap the lexicon</a>. Sadly there is not as yet
       any import functionality for LMF formats. However, you can <a href="#help-new-entry">create new entries</a> and <a href="#edit-entry">expand the
-        paradigms for existing entries</a> manually. To lookup an entry, use the <a href="#lex">lexicon perspective</a>.
-      The <a href="#lex">lexicon perspective</a> has a search box in the top left corner. This searchbox will filter entries
+        paradigms for existing entries</a> manually. To lookup an entry, use the <a href="#lex">lexicon view</a>.
+      The <a href="#lex">lexicon view</a> has a search box in the top left corner. This searchbox will filter entries
       to only those that have a written representation of a form that matches the query. For example, searching for "cats"
       with match entries with the lemma "cat" so long as there is a form with a value "cats" for that entry. Click on the
       title of the entry to edit that entry.</p>
@@ -36,9 +36,9 @@
       <p>If you have terminology that hasn't been integrated into the LexTerm Manager,
       you can import the terminology by following the instructions for <a href="#tbx">importing an existing TBX termbase</a> or
       manually creating entries. Once your terminology has been entered in the manager, you can access the data by
-      clicking on the "Terminology" link in the top navigation bar to navigate to the <a href="#term">terminology perspective</a>.</p>
+      clicking on the "Terminology" link in the top navigation bar to navigate to the <a href="#term">terminology view</a>.</p>
 
-      <p>The <a href="#term">terminology perspective</a> allows you to view terms and definitions for multiple languages, which is
+      <p>The <a href="#term">terminology view</a> allows you to view terms and definitions for multiple languages, which is
       useful as a basic glossary while translating. You can use the search box in the top left to search for various
       entries. The search box will find entries that have a representation matching the query even if that representation
       is not the lemma, which means that terms returned may not appear to match the query. However, if you click on a
@@ -85,7 +85,7 @@
 
       <p>Once you have filled out the various fields, click the "Save" button to create the new entry. Because the entry
       and all of its various parts will need to be indexed in the search system, it may take several seconds before
-      you will be automatically navigated to the entry perspective, where you can provide additional information about
+      you will be automatically navigated to the entry view, where you can provide additional information about
       this entry.</p>
 
       <p><a name="edit-entry"></a></p>
@@ -93,7 +93,7 @@
       <h2><a name="editing-existing-entries" class="anchor" href="#editing-existing-entries"><span class="anchor-icon"></span></a>Editing Existing Entries</h2>
 
       <p>All of the various parts of a LexTerm Manager entry can be edited by clicking on an entry link in either the
-      <a href="#term">terminology</a> or <a href="#lex">lexicon</a> perspectives. Once opened, an entry will display the lemma at the top.
+      <a href="#term">terminology</a> or <a href="#lex">lexicon</a> views. Once opened, an entry will display the lemma at the top.
       Clicking on the "X" in the top right will delete the entry. This does not delete any languages, lexical classes,
       forms, features, concepts, or subject fields related to that entry. However, it will remove any representations
       of any forms that comprise the entry. In general, it is not possible to delete other parts of an entry via the
@@ -123,12 +123,12 @@
       in the new form dialog field "Name" and selecting the plural feature in the multiselect on the same dialog.
       To add this new form to the entry, click the "Add Lexical Form" button and select the noun-plural form.
       This will add a new row to the paradigm with a placeholder (i.e. "*") for the written representation of that
-      form. You can then fill in the written representation of the form and hit &lt;enter&gt; to save it in the paradigm.
+      form. You can then fill in the written representation of the form and hit &lt;Enter&gt; to save it in the paradigm.
       Assuming you were working on an entry for the term "cat" in English, the written representation of the
-      noun-plural form would be "cats".</enter></p>
+      noun-plural form would be "cats".</p>
 
-      <p><em>Note: To save most parts of the entry, simply hit &lt;enter&gt;. Selections are automatically saved.
-        In order to save a definition, you must hit &lt;Enter&gt; while the cursor is inside the definition.</enter></em></p>
+      <p><em>Note: To save most parts of the entry, simply hit &lt;Enter&gt;. Selections are automatically saved.
+        In order to save a definition, you must hit &lt;Enter&gt; while the cursor is inside the definition.</em></p>
 
       <p><em>Note: For developers --- All data on the server may be created, retrieved, updated, and deleted via the
         RESTful API, which has a human readable browseable interface accessible under <a href="/api">/api</a>.</em></p>
@@ -137,19 +137,19 @@
 
       <h2><a name="terminology-perspective" class="anchor" href="#terminology-perspective"><span class="anchor-icon"></span></a>Terminology Perspective</h2>
 
-      <p>In order to view the terminology perspective, there must be entries for the LexTerm Manager to access. If the
+      <p>In order to view the terminology view, there must be entries for the LexTerm Manager to access. If the
       "Terminology" link does not appear in the top navigation bar, you need to either <a href="#help-new-entry">manually create entries</a>
-      or <a href="#tbx">import an existing TBX termbase</a> to proceed. Once data has been entered the terminology perspective
+      or <a href="#tbx">import an existing TBX termbase</a> to proceed. Once data has been entered the terminology view
       becomes available by clicking the "Terminology" link in the top navigation bar.</p>
 
-      <p>The terminology perspective consists of a table of concepts and their representations (i.e. terms) in selected
+      <p>The terminology view consists of a table of concepts and their representations (i.e. terms) in selected
       languages. To select a language to view, simply click the box under "Languages" and select a language by name
       from the dropdown menu. You can also filter concepts by subject field if subject fields have been assigned
       to concepts (<a href="#edit-entry">see editing existing entries</a>).</p>
 
       <p>To deselect a language or subject field, simply click the "X" on the language name tag.</p>
 
-      <p>Results can be paginated using the pager at the bottom of the terminology perspective. The left-hand side of the
+      <p>Results can be paginated using the pager at the bottom of the terminology view. The left-hand side of the
       pager is for limiting the number of results in the table, and the right-hand side is for cycling through pages
       of data when the LexTerm Manager has more entries that match the languages and subject fields selected than the
       limit.</p>
@@ -161,17 +161,17 @@
 
       <h2><a name="lexicon-perspective" class="anchor" href="#lexicon-perspective"><span class="anchor-icon"></span></a>Lexicon Perspective</h2>
 
-      <p>In order to view the lexicon perspective, there must be entries for the LexTerm Manager to access. If the
+      <p>In order to view the lexicon view, there must be entries for the LexTerm Manager to access. If the
       "Lexicon" link does not appear in the top navigation bar, you need to either <a href="#help-new-entry">manually create entries</a>
-      or <a href="#tbx">import an existing TBX termbase</a> to proceed. Once data has been entered the lexicon perspective
+      or <a href="#tbx">import an existing TBX termbase</a> to proceed. Once data has been entered the lexicon view
       becomes available by clicking the "Lexicon" link in the top navigation bar.</p>
 
-      <p>The lexicon perspective consists of a panel for selecting various languages and a list of entries for the language
+      <p>The lexicon view consists of a panel for selecting various languages and a list of entries for the language
       selected. Clicking on the highlighted title (lemma) for any given entry will allow you to edit that entry. Unlike
-      the <a href="#term">terminology perspective</a>, this perspective shows all of the data for a given entry but does not let
+      the <a href="#term">terminology view</a>, this view shows all of the data for a given entry but does not let
       you compare concepts across languages.</p>
 
-      <p>Results can be paginated using the pager at the bottom of the lexicon perspective. The left-hand side of the
+      <p>Results can be paginated using the pager at the bottom of the lexicon view. The left-hand side of the
       pager is for limiting the number of results in the table, and the right-hand side is for cycling through pages
       of data when the LexTerm Manager has more entries that match the language selected than the limit.</p>
   </article></div>

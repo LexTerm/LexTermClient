@@ -4,9 +4,9 @@ Terminologists
 If you have terminology that hasn't been integrated into the LexTerm Manager,
  you can import the terminology by following the instructions for [importing an existing TBX termbase] (#tbx) or
 [manually creating entries](#help-new-entry). Once your terminology has been entered in the manager, you can access the data by
- clicking on the "Terminology" link in the top navigation bar to navigate to the [terminology perspective](#term).
+ clicking on the "Terminology" link in the top navigation bar to navigate to the [terminology view](#term).
 
-The [terminology perspective](#term) allows you to view terms across multiple languages. You can also search for
+The [terminology view](#term) allows you to view terms across multiple languages. You can also search for
 specific terms using the search box in the top left. Terms are ordered by their concept id. If you want to add
 a new term to a concept, copy the concept id for the concept you wish to extend, then click "New Entry" to [create
 a new entry](#help-new-entry) with that concept in another language.
@@ -17,8 +17,8 @@ Lexicographers
 -----------
 If TBX files are available, they can be a good way to [bootstrap the lexicon](#tbx). Sadly there is not as yet
 any import functionality for LMF formats. However, you can [create new entries](#help-new-entry) and [expand the
-paradigms for existing entries](#edit-entry) manually. To lookup an entry, use the [lexicon perspective](#lex).
-The [lexicon perspective](#lex) has a search box in the top left corner. This searchbox will filter entries
+paradigms for existing entries](#edit-entry) manually. To lookup an entry, use the [lexicon view](#lex).
+The [lexicon view](#lex) has a search box in the top left corner. This searchbox will filter entries
 to only those that have a written representation of a form that matches the query. For example, searching for "cats"
 with match entries with the lemma "cat" so long as there is a form with a value "cats" for that entry. Click on the
 title of the entry to edit that entry.
@@ -30,9 +30,9 @@ Translators
 If you have terminology that hasn't been integrated into the LexTerm Manager,
  you can import the terminology by following the instructions for [importing an existing TBX termbase] (#tbx) or
 manually creating entries. Once your terminology has been entered in the manager, you can access the data by
- clicking on the "Terminology" link in the top navigation bar to navigate to the [terminology perspective](#term).
+ clicking on the "Terminology" link in the top navigation bar to navigate to the [terminology view](#term).
 
-The [terminology perspective](#term) allows you to view terms and definitions for multiple languages, which is
+The [terminology view](#term) allows you to view terms and definitions for multiple languages, which is
 useful as a basic glossary while translating. You can use the search box in the top left to search for various
 entries. The search box will find entries that have a representation matching the query even if that representation
 is not the lemma, which means that terms returned may not appear to match the query. However, if you click on a
@@ -76,7 +76,7 @@ you can click save and have the LexTerm Manager generate a unique concept id for
 
 Once you have filled out the various fields, click the "Save" button to create the new entry. Because the entry
 and all of its various parts will need to be indexed in the search system, it may take several seconds before
-you will be automatically navigated to the entry perspective, where you can provide additional information about
+you will be automatically navigated to the entry view, where you can provide additional information about
 this entry.
 
 
@@ -84,7 +84,7 @@ this entry.
 Editing Existing Entries
 -----------
 All of the various parts of a LexTerm Manager entry can be edited by clicking on an entry link in either the
-[terminology](#term) or [lexicon](#lex) perspectives. Once opened, an entry will display the lemma at the top.
+[terminology](#term) or [lexicon](#lex) views. Once opened, an entry will display the lemma at the top.
 Clicking on the "X" in the top right will delete the entry. This does not delete any languages, lexical classes,
 forms, features, concepts, or subject fields related to that entry. However, it will remove any representations
 of any forms that comprise the entry. In general, it is not possible to delete other parts of an entry via the
@@ -129,19 +129,19 @@ RESTful API, which has a human readable browseable interface accessible under [/
 <a name="term"></a>
 Terminology Perspective
 -----------
-In order to view the terminology perspective, there must be entries for the LexTerm Manager to access. If the
+In order to view the terminology view, there must be entries for the LexTerm Manager to access. If the
 "Terminology" link does not appear in the top navigation bar, you need to either [manually create entries](#help-new-entry)
- or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the terminology perspective
+ or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the terminology view
 becomes available by clicking the "Terminology" link in the top navigation bar.
 
-The terminology perspective consists of a table of concepts and their representations (i.e. terms) in selected
+The terminology view consists of a table of concepts and their representations (i.e. terms) in selected
 languages. To select a language to view, simply click the box under "Languages" and select a language by name
 from the dropdown menu. You can also filter concepts by subject field if subject fields have been assigned
 to concepts ([see editing existing entries](#edit-entry)).
 
 To deselect a language or subject field, simply click the "X" on the language name tag.
 
-Results can be paginated using the pager at the bottom of the terminology perspective. The left-hand side of the
+Results can be paginated using the pager at the bottom of the terminology view. The left-hand side of the
 pager is for limiting the number of results in the table, and the right-hand side is for cycling through pages
 of data when the LexTerm Manager has more entries that match the languages and subject fields selected than the
 limit.
@@ -153,16 +153,16 @@ particular term.
 <a name="lex"></a>
 Lexicon Perspective
 -----------
-In order to view the lexicon perspective, there must be entries for the LexTerm Manager to access. If the
+In order to view the lexicon view, there must be entries for the LexTerm Manager to access. If the
 "Lexicon" link does not appear in the top navigation bar, you need to either [manually create entries](#help-new-entry)
- or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the lexicon perspective
+ or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the lexicon view
 becomes available by clicking the "Lexicon" link in the top navigation bar.
 
-The lexicon perspective consists of a panel for selecting various languages and a list of entries for the language
+The lexicon view consists of a panel for selecting various languages and a list of entries for the language
 selected. Clicking on the highlighted title (lemma) for any given entry will allow you to edit that entry. Unlike
-the [terminology perspective](#term), this perspective shows all of the data for a given entry but does not let
+the [terminology view](#term), this view shows all of the data for a given entry but does not let
 you compare concepts across languages.
 
-Results can be paginated using the pager at the bottom of the lexicon perspective. The left-hand side of the
+Results can be paginated using the pager at the bottom of the lexicon view. The left-hand side of the
 pager is for limiting the number of results in the table, and the right-hand side is for cycling through pages
 of data when the LexTerm Manager has more entries that match the language selected than the limit.

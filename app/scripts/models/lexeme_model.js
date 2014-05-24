@@ -12,7 +12,7 @@ Ltm.Lexeme = DS.Model.extend({
       var proxy = Ember.ObjectProxy.create({});
       this.get('store').find('representation', {
           lexical_form__lexeme: self.get('id'),
-          lexical_form__is_lemma: true,
+          lexical_form__is_lemma: 1,
           representation_type__name: 'written'
       }).then(function(reps) {
         var rep = reps.get('firstObject');
