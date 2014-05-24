@@ -10,18 +10,41 @@ Ltm.Lexeme = DS.Model.extend({
     lemma: function() {
       var self = this;
       var proxy = Ember.ObjectProxy.create({});
-      this.get('store').find('representation', {
-          lexical_form__lexeme: self.get('id'),
-          lexical_form__is_lemma: 1,
-          representation_type__name: 'written'
-      }).then(function(reps) {
-        var rep = reps.get('firstObject');
-        if (!self.get('id')) {
-          proxy.set('content', {name: '* * * New Entry * * *'});
-        } else {
-          proxy.set('content', rep);
+      Ltm.entries.search({
+        from: 0,
+        size: 1,
+        query: {
+          match: {id: self.get('id')}
         }
+      }).then(function(data){
+        var entry = Ember.Object.create(data.hits.hits[0]._source);
+        console.log(entry);
+        // Set wrtten representation
+        entry.get('lexical_forms').forEach(function(lex_form) {
+          lex_form.written_representation = lex_form.representations
+                                                    .find(function(rep) {
+                                                      return rep.representation_type.name == 'written'; // note magic word
+                                                    });
+        });
+        // Get lemma
+        var lemma = entry.get('lexical_forms')
+                         .findBy('is_lemma')
+                         .written_representation
+                         .name;
+        proxy.set('content', {name: lemma});
       });
+      //this.get('store').find('representation', {
+          //lexical_form__lexeme: self.get('id'),
+          //lexical_form__is_lemma: 1,
+          //representation_type__name: 'written'
+      //}).then(function(reps) {
+        //var rep = reps.get('firstObject');
+        //if (!self.get('id')) {
+          //proxy.set('content', {name: '* * * New Entry * * *'});
+        //} else {
+          //proxy.set('content', rep);
+        //}
+      //});
         return proxy;
     }.property('lexicalForms.@each')
 });

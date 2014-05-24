@@ -79,6 +79,8 @@ and all of its various parts will need to be indexed in the search system, it ma
 you will be automatically navigated to the entry view, where you can provide additional information about
 this entry.
 
+*Note: Once you save the entry, all further modifications are just the same as if you
+were editing any other entry. You are free to add forms and a definition later. **
 
 <a name="edit-entry"></a>
 Editing Existing Entries
