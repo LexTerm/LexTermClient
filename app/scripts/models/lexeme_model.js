@@ -18,7 +18,6 @@ Ltm.Lexeme = DS.Model.extend({
         }
       }).then(function(data){
         var entry = Ember.Object.create(data.hits.hits[0]._source);
-        console.log(entry);
         // Set wrtten representation
         entry.get('lexical_forms').forEach(function(lex_form) {
           lex_form.written_representation = lex_form.representations
@@ -33,18 +32,6 @@ Ltm.Lexeme = DS.Model.extend({
                          .name;
         proxy.set('content', {name: lemma});
       });
-      //this.get('store').find('representation', {
-          //lexical_form__lexeme: self.get('id'),
-          //lexical_form__is_lemma: 1,
-          //representation_type__name: 'written'
-      //}).then(function(reps) {
-        //var rep = reps.get('firstObject');
-        //if (!self.get('id')) {
-          //proxy.set('content', {name: '* * * New Entry * * *'});
-        //} else {
-          //proxy.set('content', rep);
-        //}
-      //});
         return proxy;
     }.property('lexicalForms.@each')
 });
