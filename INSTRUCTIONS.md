@@ -15,10 +15,10 @@ a new entry](#help-new-entry) with that concept in another language.
 <a name="translators"></a>
 Lexicographers
 -----------
-If TBX files are available, they can be a good way to [bootstrap the lexicon](#tbx). Sadly there is not as yet
+If TBX files are available, they can be a good way to [bootstrap the dictionary](#tbx). Sadly there is not as yet
 any import functionality for LMF formats. However, you can [create new entries](#help-new-entry) and [expand the
-paradigms for existing entries](#edit-entry) manually. To lookup an entry, use the [lexicon view](#lex).
-The [lexicon view](#lex) has a search box in the top left corner. This searchbox will filter entries
+paradigms for existing entries](#edit-entry) manually. To lookup an entry, use the [lex view](#lex).
+The [lex view](#lex) has a search box in the top left corner. This searchbox will filter entries
 to only those that have a written representation of a form that matches the query. For example, searching for "cats"
 with match entries with the lemma "cat" so long as there is a form with a value "cats" for that entry. Click on the
 title of the entry to edit that entry.
@@ -86,7 +86,7 @@ were editing any other entry. You are free to add forms and a definition later. 
 Editing Existing Entries
 -----------
 All of the various parts of a LexTerm Manager entry can be edited by clicking on an entry link in either the
-[terminology](#term) or [lexicon](#lex) views. Once opened, an entry will display the lemma at the top.
+[terminology](#term) or [lex](#lex) views. Once opened, an entry will display the lemma at the top.
 Clicking on the "X" in the top right will delete the entry. This does not delete any languages, lexical classes,
 forms, features, concepts, or subject fields related to that entry. However, it will remove any representations
 of any forms that comprise the entry. In general, it is not possible to delete other parts of an entry via the
@@ -153,18 +153,18 @@ particular term.
 
 
 <a name="lex"></a>
-Lexicon Perspective
+Lex Perspective
 -----------
-In order to view the lexicon view, there must be entries for the LexTerm Manager to access. If the
-"Lexicon" link does not appear in the top navigation bar, you need to either [manually create entries](#help-new-entry)
- or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the lexicon view
-becomes available by clicking the "Lexicon" link in the top navigation bar.
+In order to view the lex view, there must be entries for the LexTerm Manager to access. If
+**Lex (Dictionary)** does not appear in the top navigation bar, you need to either [manually create entries](#help-new-entry)
+ or [import an existing TBX termbase](#tbx) to proceed. Once data has been entered the lex view
+becomes available by clicking **Lex (Dictionary)** in the top navigation bar.
 
-The lexicon view consists of a panel for selecting various languages and a list of entries for the language
+The lex view consists of a panel for selecting various languages and a list of entries for the language
 selected. Clicking on the highlighted title (lemma) for any given entry will allow you to edit that entry. Unlike
 the [terminology view](#term), this view shows all of the data for a given entry but does not let
 you compare concepts across languages.
 
-Results can be paginated using the pager at the bottom of the lexicon view. The left-hand side of the
+Results can be paginated using the pager at the bottom of the lex view. The left-hand side of the
 pager is for limiting the number of results in the table, and the right-hand side is for cycling through pages
 of data when the LexTerm Manager has more entries that match the language selected than the limit.

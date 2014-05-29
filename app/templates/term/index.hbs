@@ -11,7 +11,12 @@
           </tr>
           <tr>
             <td>
-              {{input class="form-control" value=_query_term action="setQueryTerm"}}
+              {{input
+                class="form-control"
+                placeholder="Search for a term."
+                value=_query_term
+                action="setQueryTerm"
+              }}
             </td>
             <td>
               {{multi-select-component

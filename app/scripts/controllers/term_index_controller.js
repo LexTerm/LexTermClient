@@ -86,7 +86,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
             },
             filter: {
               and: [{
-                terms: {"lexical_class.language.locale": this.get('activeLanguages').mapBy('locale')}
+                match_all: {}
               }]
             }
           }
@@ -103,6 +103,12 @@ Ltm.TermIndexController = Ember.Controller.extend({
         });
       }
 
+      if (this.get('activeLanguages').length) {
+        query.filtered.filter.and.push({
+          terms: {"lexical_class.language.locale": this.get('activeLanguages').mapBy('locale')}
+        });
+      }
+
       if (this.get('queryTerm')) {
         query.filtered.filter.and.push({
           nested: {
@@ -114,9 +120,11 @@ Ltm.TermIndexController = Ember.Controller.extend({
         });
       }
 
+      var size_factor = this.get('activeLanguages').toArray().length || 1;
+
       var entries_promise = Ltm.entries.search({
           from: this.get('start'),
-          size: this.get('numRows') * this.get('activeLanguages').toArray().length,
+          size: this.get('numRows') * size_factor,
           sort: "concept.id",
           query: query
         });
@@ -125,7 +133,7 @@ Ltm.TermIndexController = Ember.Controller.extend({
       entries_promise.then(function(data) {
         var total = data.hits.total;
         var num_rows = control.get('numRows');
-        var num_langs = control.get('activeLanguages').toArray().length;
+        var num_langs = size_factor;
         var num_pages = total ? Math.ceil(total / (num_rows * num_langs)) : 0;
         var current_page_value = control.get('start');
         var pages = Array(num_pages);
@@ -206,5 +214,4 @@ Ltm.TermIndexController = Ember.Controller.extend({
         }
       }
     })
-
 });
